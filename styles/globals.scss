@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+}
+
+ul,
+ol,
+li {
+   list-style: none;
+}
+
+body {
+   background: #1e2538;
+}
