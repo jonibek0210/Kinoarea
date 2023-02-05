@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { useState } from "react"
 
 import { FiSearch } from "react-icons/fi"
 import { FaFacebookF } from "react-icons/fa"
@@ -7,15 +8,18 @@ import { RxHamburgerMenu } from "react-icons/rx"
 import { AiOutlineInstagram, AiOutlineTwitter } from "react-icons/ai"
 
 const Header = () => {
+
    return (
-      <header className="container m-auto flex justify-between items-center || px-6 py-10 max-xl:py-7 max-md:py-3 || bg-[#55555550]">
+      <header className="container m-auto flex justify-between items-center || px-6 py-10 max-xl:py-7 max-md:py-3">
          <div className="flex">
             <button className="bg-white p-[14px] max-md:p-[8px] || rounded-[5px] mr-[12px] max-md:block hidden"><RxHamburgerMenu color="#3657CB" /></button>
             <button className="bg-white p-[14px] max-md:p-[8px] || rounded-[5px] mr-[12px] max-xl:block hidden"><FiSearch color="#3657CB" size={15} /></button>
          </div>
          <div className="flex max-xl:flex-col || w-full justify-between items-center">
             <div className="">
-               <Image src="/images/logo.svg" alt="logo" width="130" height="31" className="max-md:w-24 " />
+               <a href="#">
+                  <Image src="/images/logo.svg" alt="logo" width="130" height="31" className="max-md:w-24 " />
+               </a>
                <div className="flex justify-between || mt-3 max-xl:mt-2">
                   <button><IoLogoVk size={17} className="text-[#686868] hover:text-white ease-in duration-100 cursor-pointer " /></button>
                   <button><AiOutlineInstagram size={17} className="text-[#686868] hover:text-white ease-in duration-100 cursor-pointer " /></button>
@@ -25,11 +29,11 @@ const Header = () => {
             </div>
             <div className="w-full || m-auto max-xl:mt-5 || px-20 max-xl:px-8 || max-md:absolute max-md:-top-full">
                <div className="hidden max-md:block">
-                  <Image src="/images/logo.svg" alt="logo" width="130" height="31" />
+                  <Image src="/images/logo.svg" alt="logo" width="130" height="30" />
                </div>
                <nav className="">
                   <ul className="flex justify-between">
-                     <li className="text-[17px] max-xl:text-sm || text-white font-bold leading-5 hover:text-gray-300 ease-in duration-100 cursor-pointer">Афиша</li>
+                     <li className="text-[17px] max-xl:text-sm || text-white font-bold    -5 hover:text-gray-300 ease-in duration-100 cursor-pointer">Афиша</li>
                      <li className="text-[17px] max-xl:text-sm || text-white font-bold leading-5 hover:text-gray-300 ease-in duration-100 cursor-pointer">Медиа</li>
                      <li className="text-[17px] max-xl:text-sm || text-white font-bold leading-5 hover:text-gray-300 ease-in duration-100 cursor-pointer">Фильмы</li>
                      <li className="text-[17px] max-xl:text-sm || text-white font-bold leading-5 hover:text-gray-300 ease-in duration-100 cursor-pointer">Актёры</li>
