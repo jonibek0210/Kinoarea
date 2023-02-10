@@ -3,16 +3,21 @@ import { useState } from "react"
 
 import { FiSearch } from "react-icons/fi"
 import { FaFacebookF } from "react-icons/fa"
-import { IoLogoVk } from "react-icons/io"
+import { IoLogoVk, IoMdClose } from "react-icons/io"
 import { RxHamburgerMenu } from "react-icons/rx"
 import { AiOutlineInstagram, AiOutlineTwitter } from "react-icons/ai"
 
-const Header = () => {
+interface IHeader {
+
+}
+
+const Header: React.FC = (props) => {
+   const [burger, setBurger] = useState(true)
 
    return (
       <header className="container m-auto flex justify-between items-center || px-6 py-10 max-xl:py-7 max-md:py-3">
          <div className="flex">
-            <button className="bg-white p-[14px] max-md:p-[8px] || rounded-[5px] mr-[12px] max-md:block hidden"><RxHamburgerMenu color="#3657CB" /></button>
+            <button onClick={() => setBurger(true)} className="bg-white p-[14px] max-md:p-[8px] || rounded-[5px] mr-[12px] max-md:block hidden"><RxHamburgerMenu color="#3657CB" /></button>
             <button className="bg-white p-[14px] max-md:p-[8px] || rounded-[5px] mr-[12px] max-xl:block hidden"><FiSearch color="#3657CB" size={15} /></button>
          </div>
          <div className="flex max-xl:flex-col || w-full justify-between items-center">
@@ -27,13 +32,14 @@ const Header = () => {
                   <button><AiOutlineTwitter size={17} className="text-[#686868] hover:text-white ease-in duration-100 cursor-pointer " /></button>
                </div>
             </div>
-            <div className="w-full || m-auto max-xl:mt-5 || px-20 max-xl:px-8 || max-md:absolute max-md:-top-full">
-               <div className="hidden max-md:block">
+            <div className={!burger ? "w-full || m-auto max-xl:mt-5 || px-20 max-xl:px-8 || max-md:absolute max-md:-top-full ease-out duration-300" : "w-full max-md:h-screen || m-auto max-xl:mt-5 || px-20 max-xl:px-8 || max-md:fixed max-md:-top-5 max-md:left-0 || max-md:z-50 max-md:backdrop-blur-sm max-md:bg-black/30 ease-out duration-300"}>
+               <div className="hidden max-md:flex max-md:justify-center max-md:my-5">
                   <Image src="/images/logo.svg" alt="logo" width="130" height="30" />
+                  <button onClick={() => setBurger(false)} className="absolute right-5 top-5"><IoMdClose size={30} color="#ffffff" /></button>
                </div>
                <nav className="">
-                  <ul className="flex justify-between">
-                     <li className="text-[17px] max-xl:text-sm || text-white font-bold    -5 hover:text-gray-300 ease-in duration-100 cursor-pointer">Афиша</li>
+                  <ul className="flex max-md:flex-col || justify-between max-md:justify-center max-md:items-center || max-md:gap-4">
+                     <li className="text-[17px] max-xl:text-sm || text-white font-bold leading-5 hover:text-gray-300 ease-in duration-100 cursor-pointer">Афиша</li>
                      <li className="text-[17px] max-xl:text-sm || text-white font-bold leading-5 hover:text-gray-300 ease-in duration-100 cursor-pointer">Медиа</li>
                      <li className="text-[17px] max-xl:text-sm || text-white font-bold leading-5 hover:text-gray-300 ease-in duration-100 cursor-pointer">Фильмы</li>
                      <li className="text-[17px] max-xl:text-sm || text-white font-bold leading-5 hover:text-gray-300 ease-in duration-100 cursor-pointer">Актёры</li>
@@ -53,3 +59,5 @@ const Header = () => {
 }
 
 export default Header;
+
+// className = "w-full || m-auto max-xl:mt-5 || px-20 max-xl:px-8 || max-md:absolute max-md:-top-full"

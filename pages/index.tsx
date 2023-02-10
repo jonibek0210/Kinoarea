@@ -1,12 +1,41 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import { Inter } from '@next/font/google'
+import { useState, useEffect } from 'react';
+
+
+import { useHttp } from "../hook/http.hook";
+
 import Layout from '@/layout/Layout'
-import { Movies } from '@/components/Movies'
+import PopularFilms from '@/components/PopularFilms'
+import Movies from '@/components/Movies'
+import { IMovies } from '@/types/data';
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
+	const [movies, setMovies] = useState<IMovies[]>([]);
+
+	const { loading, error, request } = useHttp();
+
+	useEffect(() => {
+		const options = {
+			method: 'GET',
+			headers: {
+				'X-RapidAPI-Key': '05671684dfmsh34daf0bc8da4826p1c4e07jsn13021fddd275',
+				'X-RapidAPI-Host': 'online-movie-database.p.rapidapi.com'
+			}
+		};
+
+		fetch('https://online-movie-database.p.rapidapi.com/title/find?q=game%20of%20thr', options)
+			.then(response => response.json())
+			.then(response => setMovies(response.results))
+			.catch(err => console.error(err));
+	}, []);
+
+	console.log(movies);
+
+
 	return (
 		<Layout>
 			<Head>
@@ -16,7 +45,12 @@ export default function Home() {
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 			<div className="">
-				<Movies />
+				<section>
+					<Movies />
+				</section>
+				<section className='mt-8'>
+					<PopularFilms />
+				</section>
 			</div>
 		</Layout>
 	)

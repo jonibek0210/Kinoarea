@@ -1,13 +1,15 @@
 import Image from 'next/image';
-import * as React from 'react';
 import Movie from './children/Movie';
 
 import { RxHamburgerMenu } from "react-icons/rx"
+import { IMovies } from '@/types/data';
 
 export interface IMoviesProps {
+   movies: IMovies[]
 }
 
-export function Movies(props: IMoviesProps) {
+const Movies: React.FC = (props) => {
+
    return (
       <div>
          <div className="flex max-xl:flex-col justify-between items-center max-xl:items-start">
@@ -37,6 +39,11 @@ export function Movies(props: IMoviesProps) {
             <Movie />
             <Movie />
          </div>
+         <div className="flex justify-center mt-8">
+            <button className='px-12 max-xl:px-8 max-md:px-7 || py-5 max-xl:py-4 max-md:py-3 || border-[2px] rounded-lg || text-lg  || font-bold || text-white border-white'>Все новинки</button>
+         </div>
       </div>
    );
 }
+
+export default Movies
