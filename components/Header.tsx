@@ -59,5 +59,3 @@ const Header: React.FC = (props) => {
 }
 
 export default Header;
-
-// className = "w-full || m-auto max-xl:mt-5 || px-20 max-xl:px-8 || max-md:absolute max-md:-top-full"
