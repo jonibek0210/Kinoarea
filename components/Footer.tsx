@@ -3,11 +3,15 @@ import { IoLogoVk } from "react-icons/io"
 import { AiOutlineInstagram, AiOutlineTwitter, AiFillYoutube } from "react-icons/ai"
 import Image from "next/image";
 
-const Footer = () => {
+interface IFooter {
+
+}
+
+const Footer: React.FC = (props) => {
    return (
       <footer className="container m-auto px-6 flex flex-col items-center pb-10">
          <div className="w-1/4 max-md:w-2/4 flex justify-between || mt-14 max-xl:mt10 max-md:mt-8">
-            <button><IoLogoVk className="text-[30px] max-lg:text-[25px] max-md:text-[20px]  || text-[#3C4767] hover:text-white ease-in duration-100 cursor-pointer " /></button>
+            <button><IoLogoVk className="text-[30px] max-lg:text-[25px] max-md:text-[20px] 8|| text-[#3C4767] hover:text-white ease-in duration-100 cursor-pointer " /></button>
             <button><AiOutlineInstagram className="text-[30px] max-lg:text-[25px] max-md:text-[20px]  || text-[#3C4767] hover:text-white ease-in duration-100 cursor-pointer " /></button>
             <button><FaFacebookF className="text-[30px] max-lg:text-[25px] max-md:text-[20px]  || text-[#3C4767] hover:text-white ease-in duration-100 cursor-pointer " /></button>
             <button><AiOutlineTwitter className="text-[30px] max-lg:text-[25px] max-md:text-[20px]  || text-[#3C4767] hover:text-white ease-in duration-100 cursor-pointer " /></button>

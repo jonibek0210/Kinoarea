@@ -4,7 +4,7 @@ import * as React from 'react';
 interface IMovieProps {
 }
 
-const Movie: React.FunctionComponent<IMovieProps> = (props) => {
+const Movie: React.FC = (props) => {
    return (
       <div className="">
          <div className="rounded-xl overflow-hidden relative">
