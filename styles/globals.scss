@@ -17,3 +17,25 @@ li {
 body {
    background: #1e2538;
 }
+
+::-webkit-scrollbar {
+   width: 6px;
+}
+::-webkit-scrollbar-track {
+   background: transparent;
+}
+::-webkit-scrollbar-thumb {
+   background: #888;
+   border-radius: 100px;
+}
+::-webkit-scrollbar-thumb:hover {
+   background: #555;
+}
+
+// .meTruncate {
+//   text-overflow: ellipsis;
+//   overflow: hidden;
+//   display: -webkit-box;
+//   -webkit-line-clamp: 2 !important;
+//   -webkit-box-orient: vertical;
+// }
