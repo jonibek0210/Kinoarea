@@ -77,25 +77,25 @@ const Header: React.FC = (props) => {
 						<nav className="">
 							<ul className="flex max-md:flex-col || justify-between max-md:justify-center max-md:items-center || max-md:gap-4">
 								<li className="text-[17px] max-xl:text-sm || text-white font-bold leading-5 hover:text-gray-300 ease-in duration-100 cursor-pointer">
-									<a href="#">Афиша</a>
+									<Link href="#">Афиша</Link>
 								</li>
 								<li className="text-[17px] max-xl:text-sm || text-white font-bold leading-5 hover:text-gray-300 ease-in duration-100 cursor-pointer">
-									<a href="#">Медиа</a>
+									<Link href="#">Медиа</Link>
 								</li>
 								<li className="text-[17px] max-xl:text-sm || text-white font-bold leading-5 hover:text-gray-300 ease-in duration-100 cursor-pointer">
-									<a href="#">Фильмы</a>
+									<Link href="#">Фильмы</Link>
 								</li>
 								<li className="text-[17px] max-xl:text-sm || text-white font-bold leading-5 hover:text-gray-300 ease-in duration-100 cursor-pointer">
 									<Link href="/actors">Актеры</Link>
 								</li>
 								<li className="text-[17px] max-xl:text-sm || text-white font-bold leading-5 hover:text-gray-300 ease-in duration-100 cursor-pointer">
-									<a href="#">Новости</a>
+									<Link href="#">Новости</Link>
 								</li>
 								<li className="text-[17px] max-xl:text-sm || text-white font-bold leading-5 hover:text-gray-300 ease-in duration-100 cursor-pointer">
-									<a href="#">Подборки</a>
+									<Link href="#">Подборки</Link>
 								</li>
 								<li className="text-[17px] max-xl:text-sm || text-white font-bold leading-5 hover:text-gray-300 ease-in duration-100 cursor-pointer">
-									<a href="#">Категории</a>
+									<Link href="#">Категории</Link>
 								</li>
 							</ul>
 						</nav>
