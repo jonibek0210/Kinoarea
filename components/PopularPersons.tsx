@@ -34,7 +34,7 @@ const PopularPersons: React.FC<any> = (props) => {
 			</div>
 			<div className="grid grid-cols-4 max-lg:grid-cols-3 max-md:grid-cols-2 || gap-5 max-md:gap-x-2 max-md:gap-y-4 || pt-12 max-lg:pt-7 max-md:pt-5 max-sm:pt-4">
 				{
-					persons.map((item: any) => <People key={item.id} item={item} />)
+					persons.slice(0, 8).map((item: any) => <People key={item.id} item={item} />)
 				}
 			</div>
 		</div>
