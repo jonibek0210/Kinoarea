@@ -8,6 +8,8 @@ import { IoLogoVk, IoMdClose } from "react-icons/io"
 import { RxHamburgerMenu } from "react-icons/rx"
 import { AiOutlineInstagram, AiOutlineTwitter } from "react-icons/ai"
 import Link from "next/link";
+import Movie from "./children/Movie";
+import SearchCard from "./children/SearchCard";
 
 const Header: React.FC = (props) => {
 	const [burger, setBurger] = useState(false)
@@ -15,21 +17,24 @@ const Header: React.FC = (props) => {
 	const key = "1bb078d910403b47ba1478583d67aa0b"
 	const [searchText, setSearchText] = useState('')
 	const [content, setContent] = useState([]);
+	const [type, setType] = useState('movie')
 
 	const fetchSearch = async () => {
 		const { data } = await axios.get(
-			`https://api.themoviedb.org/3/search/movie?api_key=${key}&language=en-US&query=${searchText}&page=1&include_adult=false`
+			`https://api.themoviedb.org/3/search/${type}?api_key=${key}&language=en-US&query=${searchText}&page=1&include_adult=false`
 		)
 
 		setContent(data.results)
 	}
 
+	console.log(content);
+
 	return (
 		<>
-			<div className={search ? " w-screen h-screen fixed top-0 left-0 z-20 ease-out duration-500" : 'w-screen h-screen fixed -top-full left-0 z-20 ease-out duration-500'}>
-				<div className={search ? "backdrop-blur-sm max-md:bg-black/30 w-screen h-screen fixed top-0 left-0 z-[-1]" : "backdrop-blur-sm max-md:bg-black/30 w-screen h-screen fixed -top-full left-0 z-[-1]"}></div>
+			<div className={search ? " w-screen h-screen fixed top-0 left-0 px-6 z-20 ease-out duration-500" : 'w-screen h-screen fixed -top-full left-0 px-6 z-20 ease-out duration-500'}>
+				<div className={search ? "backdrop-blur-sm max-md:bg-black/95 w-screen h-screen fixed top-0 left-0 z-[-1]" : "backdrop-blur-sm max-md:bg-black/95 w-screen h-screen fixed -top-full left-0 z-[-1]"}></div>
 
-				<div className="container m-auto mt-10 px-10">
+				<div className="container m-auto mt-10">
 					<div className="flex justify-center">
 						<Image src="/images/logo.svg" alt="logo" width="130" height="30" />
 					</div>
@@ -43,12 +48,19 @@ const Header: React.FC = (props) => {
 						<button onClick={() => setSearch(false)} className="ml-5"><IoMdClose size={30} color="#ffffff" /></button>
 					</div>
 				</div>
-				<div className="">
-					{/* {
-						content.map((item: any) =>
-							console.log(item)
-						)
-					} */}
+				<div className="container m-auto flex items-center justify-around mt-5">
+					<button onClick={() => setType('movie')} className="w-full border-b-[2px] border-transparent hover:border-[#3657CB] text-xl font-medium text-gray-200">Movies</button>
+					<button onClick={() => setType('person')} className="w-full border-b-[2px] border-transparent hover:border-[#3657CB] text-xl font-medium text-gray-200">Peoples</button>
+					{/* <button onClick={() => setType('tv')} className="w-full border-b-[2px] border-transparent hover:border-[#3657CB] text-xl font-medium text-gray-200">TV shows</button> */}
+				</div>
+				<div className="container m-auto flex flex-col gap-5 overflow-auto h-2/3 mt-5">
+					{
+						content.length
+							?
+							content.map((item: any) => <SearchCard key={item.id} item={item} type={type} />)
+							:
+							null
+					}
 				</div>
 			</div>
 
@@ -86,7 +98,7 @@ const Header: React.FC = (props) => {
 									<Link href="#">Фильмы</Link>
 								</li>
 								<li className="text-[17px] max-xl:text-sm || text-white font-bold leading-5 hover:text-gray-300 ease-in duration-100 cursor-pointer">
-									<Link href="/actors">Актеры</Link>
+									<Link href="#">Актеры</Link>
 								</li>
 								<li className="text-[17px] max-xl:text-sm || text-white font-bold leading-5 hover:text-gray-300 ease-in duration-100 cursor-pointer">
 									<Link href="#">Новости</Link>
