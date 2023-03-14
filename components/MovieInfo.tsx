@@ -34,7 +34,7 @@ const MovieInfo: React.FC<any> = (props) => {
          </ul>
 
          <ul className="w-1/2 max-md:w-full flex flex-col gap-5 text-white">
-            <li className="flex text-lg font-semibold">
+            <li className="flex text-lg font-semibold truncate">
                <p className="flex-auto">Жанр:</p>
                {
                   details.genres.map((genre: any) => {

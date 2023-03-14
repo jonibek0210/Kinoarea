@@ -1,11 +1,15 @@
 /* eslint-disable @next/next/no-img-element */
 import Head from 'next/head'
-import Layout from "@/layout/Layout"
 import { GetServerSideProps } from "next"
+import YouTube from 'react-youtube';
+
+import Layout from "@/layout/Layout"
 import Overview from "@/components/Overview";
 import Starring from "@/components/Starring";
 import Recommendations from "@/components/Recommendations";
 import Similar from '@/components/Similar';
+import axios from 'axios';
+import { useState } from 'react';
 
 const key = "1bb078d910403b47ba1478583d67aa0b"
 let url = 'https://api.themoviedb.org/3/movie/'
@@ -31,6 +35,8 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 	const video = await fetch(`${url}${movie_id}/videos?api_key=${key}&append_to_response=videos&language=en-US`)
 	const video2 = await video.json()
 
+
+
 	return {
 		props: {
 			data: data,
@@ -44,7 +50,12 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 }
 
 const Movie: React.FC<any> = (props) => {
-	const { data, details, similar, recommendations, reviews, video, } = props;
+	const { data, details, similar, recommendations, video } = props;
+
+	const trailer = video.results.find((vid: any) => vid.name === 'Official Trailer')
+	const key = trailer ? trailer.key : video.results[0].key
+
+	console.log(video);
 
 	return (
 		<>
@@ -59,9 +70,21 @@ const Movie: React.FC<any> = (props) => {
 				<Starring data={data} />
 				<Similar similar={similar} />
 				<Recommendations recommendations={recommendations} />
-				<div className="">
-
-				</div>
+				<section className="mt-20 max-lg:mt-14 max-md:mt-10 max-sm:mt-8">
+					<div className="">
+						<h2 className='text-white font-bold || text-6xl max-xl:text-5xl max-lg:text-4xl max-md:text-3xl max-sm:text-2xl'>Trailer</h2>
+					</div>
+					<div className="mt-10 max-lg:mt-6 relative h-[800px] max-2xl:h-[700px] max-xl:h-[500px] max-lg:h-[400px] max-md:h-[300px] max-sm:h-[200px]">
+						<YouTube
+							className='absolute top-0 left-0 bottom-0 right-0'
+							videoId={key}
+							opts={{
+								width: '100%',
+								height: '100%',
+							}}
+						/>
+					</div>
+				</section>
 			</Layout>
 		</>
 	);
