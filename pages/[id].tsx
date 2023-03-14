@@ -35,8 +35,6 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 	const video = await fetch(`${url}${movie_id}/videos?api_key=${key}&append_to_response=videos&language=en-US`)
 	const video2 = await video.json()
 
-
-
 	return {
 		props: {
 			data: data,
@@ -55,8 +53,6 @@ const Movie: React.FC<any> = (props) => {
 	const trailer = video.results.find((vid: any) => vid.name === 'Official Trailer')
 	const key = trailer ? trailer.key : video.results[0].key
 
-	console.log(video);
-
 	return (
 		<>
 			<Head>
@@ -68,7 +64,6 @@ const Movie: React.FC<any> = (props) => {
 			<Layout>
 				<Overview details={details} />
 				<Starring data={data} />
-				<Similar similar={similar} />
 				<Recommendations recommendations={recommendations} />
 				<section className="mt-20 max-lg:mt-14 max-md:mt-10 max-sm:mt-8">
 					<div className="">
@@ -85,6 +80,7 @@ const Movie: React.FC<any> = (props) => {
 						/>
 					</div>
 				</section>
+				<Similar similar={similar} />
 			</Layout>
 		</>
 	);

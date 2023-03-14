@@ -1,6 +1,7 @@
 import People from "./children/People"
 
 import { HiOutlineArrowNarrowRight } from 'react-icons/hi'
+import { useState } from "react"
 
 const Starring: React.FC<any> = (props) => {
    const { data } = props
