@@ -10,6 +10,18 @@ import Recommendations from "@/components/Recommendations";
 import Similar from '@/components/Similar';
 import axios from 'axios';
 import { useState } from 'react';
+import Trailer from '@/components/Trailer';
+import Companies from '@/components/Сompanies';
+import RecMovies from '@/components/RecMovies';
+
+interface IMovieProps {
+	actors: any
+	details: any
+	similar: any
+	recommendations: any
+	videos: any
+	external: any
+}
 
 const key = "1bb078d910403b47ba1478583d67aa0b"
 let url = 'https://api.themoviedb.org/3/movie/'
@@ -17,8 +29,8 @@ let url = 'https://api.themoviedb.org/3/movie/'
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 	const movie_id = query.id
 
-	const res = await fetch(`${url}${movie_id}/credits?api_key=${key}&language=en-US`)
-	const data = await res.json()
+	const credits = await fetch(`${url}${movie_id}/credits?api_key=${key}&language=en-US`)
+	const actors = await credits.json()
 
 	const resspons = await fetch(`${url}${movie_id}?api_key=${key}&language=en-US`)
 	const details = await resspons.json()
@@ -35,23 +47,23 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 	const video = await fetch(`${url}${movie_id}/videos?api_key=${key}&append_to_response=videos&language=en-US`)
 	const video2 = await video.json()
 
+	const external_ids = await fetch(`https://api.themoviedb.org/3/movie/${movie_id}/external_ids?api_key=${key}`)
+	const external = await external_ids.json()
+
 	return {
 		props: {
-			data: data,
+			actors: actors,
 			details: details,
 			similar: similar.results,
 			recommendations: recommendations.results,
 			reviews: reviews,
-			video: video2,
+			videos: video2,
+			external: external
 		}
 	}
 }
 
-const Movie: React.FC<any> = (props) => {
-	const { data, details, similar, recommendations, video } = props;
-
-	const trailer = video.results.find((vid: any) => vid.name === 'Official Trailer')
-	const key = trailer ? trailer.key : video.results[0].key
+const Movie: React.FC<IMovieProps> = ({ actors, details, similar, recommendations, videos, external }) => {
 
 	return (
 		<>
@@ -62,25 +74,24 @@ const Movie: React.FC<any> = (props) => {
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 			<Layout>
-				<Overview details={details} />
-				<Starring data={data} />
-				<Recommendations recommendations={recommendations} />
-				<section className="mt-20 max-lg:mt-14 max-md:mt-10 max-sm:mt-8">
-					<div className="">
-						<h2 className='text-white font-bold || text-6xl max-xl:text-5xl max-lg:text-4xl max-md:text-3xl max-sm:text-2xl'>Trailer</h2>
-					</div>
-					<div className="mt-10 max-lg:mt-6 relative h-[800px] max-2xl:h-[700px] max-xl:h-[500px] max-lg:h-[400px] max-md:h-[300px] max-sm:h-[200px]">
-						<YouTube
-							className='absolute top-0 left-0 bottom-0 right-0'
-							videoId={key}
-							opts={{
-								width: '100%',
-								height: '100%',
-							}}
-						/>
-					</div>
+				<section>
+					<Overview details={details} external={external} />
 				</section>
-				<Similar similar={similar} />
+				<section>
+					<Companies details={details} />
+				</section>
+				<section>
+					<Starring actors={actors} />
+				</section>
+				<section>
+					<RecMovies movies={recommendations} description={'Recommended films'} />
+				</section>
+				<section>
+					<Trailer videos={videos} />
+				</section>
+				<section>
+					<RecMovies movies={similar} description={'Sequels and Prequels'} />
+				</section>
 			</Layout>
 		</>
 	);
