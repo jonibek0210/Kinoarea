@@ -5,7 +5,7 @@ const Chart: React.FC<any> = (props) => {
    const { voteAverage } = props
 
    ChartJS.register(ArcElement, Tooltip, Legend);
-   let a = voteAverage.toFixed(1)
+   let a = voteAverage?.toFixed(1)
    let b = 10
 
    let c = a - b

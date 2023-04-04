@@ -27,40 +27,48 @@ const Header: React.FC = (props) => {
 		setContent(data.results)
 	}
 
-	console.log(content);
+	const handeleKeyDown: React.KeyboardEventHandler<HTMLInputElement> = (event) => {
+		if (event.key === "Enter") fetchSearch()
+	}
 
 	return (
 		<>
-			<div className={search ? " w-screen h-screen fixed top-0 left-0 px-6 z-20 ease-out duration-500" : 'w-screen h-screen fixed -top-full left-0 px-6 z-20 ease-out duration-500'}>
-				<div className={search ? "backdrop-blur-sm max-md:bg-black/95 w-screen h-screen fixed top-0 left-0 z-[-1]" : "backdrop-blur-sm max-md:bg-black/95 w-screen h-screen fixed -top-full left-0 z-[-1]"}></div>
+			<div className={search ? "w-screen h-screen fixed top-0 left-0 px-6 z-20 ease-out duration-500" : 'fixed -top-full left-0 px-6 z-20 ease-out duration-500'}>
+				<div className={search ? "backdrop-blur-sm bg-black/90 w-screen h-screen fixed top-0 left-0 z-[-1]" : "backdrop-blur-sm bg-black/90 w-screen h-screen fixed -top-full left-0 z-[-1]"}></div>
 
-				<div className="container m-auto mt-10">
-					<div className="flex justify-center">
-						<Image src="/images/logo.svg" alt="logo" width="130" height="30" />
-					</div>
-					<div className="flex mt-5">
-						<div className="relative w-full">
-							<input onChange={(e) => setSearchText(e.target.value)} className="w-full px-5 py-4 rounded-lg" type="text" />
-							<button onClick={fetchSearch} className="absolute right-1 top-1 p-4 rounded-lg bg-[#F2F60F]">
-								<FiSearch className="" color="#151A26" size={15} />
-							</button>
+				<div className="container m-auto w-full flex mt-10 max-md:mt-5">
+					<div className="w-full">
+						<div className="flex justify-center">
+							<Image src="/images/logo.svg" alt="logo" width="130" height="30" />
 						</div>
-						<button onClick={() => setSearch(false)} className="ml-5"><IoMdClose size={30} color="#ffffff" /></button>
+						<div className="flex mt-5">
+							<div className="relative w-full">
+								<input onChange={(e) => setSearchText(e.target.value)} onKeyDown={handeleKeyDown} className="w-full px-5 py-4 rounded-lg" type="text" />
+								<button onClick={fetchSearch} className="absolute right-1 top-1 p-4 rounded-lg bg-[#F2F60F]">
+									<FiSearch className="" color="#151A26" size={15} />
+								</button>
+							</div>
+						</div>
+						<div className="container m-auto flex max-md:flex-col items-center justify-around">
+							<button onClick={() => setType('movie')} className={type !== 'movie' ? "w-full pt-5 border-b-[4px] border-transparent text-xl font-medium text-gray-200 hover:border-[#5e78df8b] hover:bg-[#ffffff10]" : "w-full pt-5 border-b-4 border-transparent text-xl font-medium text-gray-200 hover:bg-[#ffffff10] border-[#3657CB] bg-gradient-to-t from-[#3657CB30] to-transparent"}>Movies</button>
+							<button onClick={() => setType('person')} className={type !== 'person' ? "w-full pt-5 border-b-[4px] border-transparent text-xl font-medium text-gray-200 hover:border-[#5e78df8b] hover:bg-[#ffffff10]" : "w-full pt-5 border-b-4 border-transparent text-xl font-medium text-gray-200 hover:bg-[#ffffff10] border-[#3657CB] bg-gradient-to-t from-[#3657CB30] to-transparent"}>Peoples</button>
+							<button onClick={() => setType('tv')} className={type !== 'tv' ? "w-full pt-5 border-b-[4px] border-transparent text-xl font-medium text-gray-200 hover:border-[#5e78df8b] hover:bg-[#ffffff10]" : "w-full pt-5 border-b-4 border-transparent text-xl font-medium text-gray-200 hover:bg-[#ffffff10] border-[#3657CB] bg-gradient-to-t from-[#3657CB30] to-transparent"}>TV</button>
+						</div>
+					</div>
+					<div className="max-md:absolute max-md:right-10 flex items-center justify-center">
+						<button onClick={() => { setSearch(false), setContent([]) }} className="ml-5"><IoMdClose size={30} color="#ffffff" /></button>
 					</div>
 				</div>
-				<div className="container m-auto flex items-center justify-around mt-5">
-					<button onClick={() => setType('movie')} className="w-full border-b-[2px] border-transparent hover:border-[#3657CB] text-xl font-medium text-gray-200">Movies</button>
-					<button onClick={() => setType('person')} className="w-full border-b-[2px] border-transparent hover:border-[#3657CB] text-xl font-medium text-gray-200">Peoples</button>
-					{/* <button onClick={() => setType('tv')} className="w-full border-b-[2px] border-transparent hover:border-[#3657CB] text-xl font-medium text-gray-200">TV shows</button> */}
-				</div>
-				<div className="container m-auto flex flex-col gap-5 overflow-auto h-2/3 mt-5">
-					{
-						content.length
-							?
-							content.map((item: any) => <SearchCard key={item.id} item={item} type={type} />)
-							:
-							null
-					}
+				<div className="h-full">
+					<div className="container m-auto grid max-md:grid-cols-2 gap-5 overflow-auto h-3/5 mt-5 pr-2">
+						{
+							content.length
+								?
+								content.map((item: any) => <SearchCard key={item.id} item={item} type={type} />)
+								:
+								null
+						}
+					</div>
 				</div>
 			</div>
 
@@ -71,9 +79,9 @@ const Header: React.FC = (props) => {
 				</div>
 				<div className="flex max-xl:flex-col || w-full justify-between items-center">
 					<div className="">
-						<a href="#">
+						<Link href="/">
 							<Image src="/images/logo.svg" alt="logo" width="130" height="31" className="max-md:w-24 " />
-						</a>
+						</Link>
 						<div className="flex justify-between || mt-3 max-xl:mt-2">
 							<button><IoLogoVk size={17} className="text-[#686868] hover:text-white ease-in duration-100 cursor-pointer " /></button>
 							<button><AiOutlineInstagram size={17} className="text-[#686868] hover:text-white ease-in duration-100 cursor-pointer " /></button>
@@ -87,27 +95,15 @@ const Header: React.FC = (props) => {
 							<button onClick={() => setBurger(false)} className="absolute right-5 top-5"><IoMdClose size={30} color="#ffffff" /></button>
 						</div>
 						<nav className="">
-							<ul className="flex max-md:flex-col || justify-between max-md:justify-center max-md:items-center || max-md:gap-4">
+							<ul className="flex max-md:flex-col || justify-around max-md:justify-center max-md:items-center || max-md:gap-4">
 								<li className="text-[17px] max-xl:text-sm || text-white font-bold leading-5 hover:text-gray-300 ease-in duration-100 cursor-pointer">
-									<Link href="#">Афиша</Link>
+									<Link href="/series">Сериалы</Link>
 								</li>
 								<li className="text-[17px] max-xl:text-sm || text-white font-bold leading-5 hover:text-gray-300 ease-in duration-100 cursor-pointer">
-									<Link href="#">Медиа</Link>
+									<Link href="/movies">Фильмы</Link>
 								</li>
 								<li className="text-[17px] max-xl:text-sm || text-white font-bold leading-5 hover:text-gray-300 ease-in duration-100 cursor-pointer">
-									<Link href="#">Фильмы</Link>
-								</li>
-								<li className="text-[17px] max-xl:text-sm || text-white font-bold leading-5 hover:text-gray-300 ease-in duration-100 cursor-pointer">
-									<Link href="#">Актеры</Link>
-								</li>
-								<li className="text-[17px] max-xl:text-sm || text-white font-bold leading-5 hover:text-gray-300 ease-in duration-100 cursor-pointer">
-									<Link href="#">Новости</Link>
-								</li>
-								<li className="text-[17px] max-xl:text-sm || text-white font-bold leading-5 hover:text-gray-300 ease-in duration-100 cursor-pointer">
-									<Link href="#">Подборки</Link>
-								</li>
-								<li className="text-[17px] max-xl:text-sm || text-white font-bold leading-5 hover:text-gray-300 ease-in duration-100 cursor-pointer">
-									<Link href="#">Категории</Link>
+									<Link href="/actors">Актеры</Link>
 								</li>
 							</ul>
 						</nav>
@@ -115,7 +111,7 @@ const Header: React.FC = (props) => {
 				</div>
 				<div className="flex items-center">
 					<button onClick={() => setSearch(true)} className="bg-white p-[17.6px] rounded-[10px] mr-[12px] max-xl:hidden"><FiSearch color="#3657CB" size={15} /></button>
-					<button className="bg-[#3657CB] || rounded-[10px] max-xl:rounded-[5px] || py-3 px-11 max-xl:px-7 max-xl:py-2 max-md:my-[6px] max-md:px-3 || text-white max-md:text-xs font-bold leading-[166.5%]">Вайти</button>
+					<button className="bg-[#3657CB] || rounded-[10px] max-xl:rounded-[5px] || py-3 px-11 max-xl:px-7 max-xl:py-2 max-md:my-[6px] max-md:px-3 || text-white max-md:text-xs font-bold leading-[166.5%]">Войти</button>
 				</div>
 			</header>
 		</>
