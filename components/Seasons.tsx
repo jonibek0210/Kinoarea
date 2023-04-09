@@ -4,8 +4,19 @@ import { useEffect, useState } from 'react'
 import Episode from './Episode';
 
 interface SeasonsProps {
-	details: any
-	tv_id: any
+	details: {
+		seasons: [
+			{
+				id: number;
+				name: string;
+				poster_path: string | null;
+				air_date: number;
+				overview: string;
+				season_number: number;
+			}
+		]
+	}
+	tv_id: number
 }
 
 const Seasons: React.FC<SeasonsProps> = ({ details, tv_id }) => {
@@ -17,7 +28,14 @@ const Seasons: React.FC<SeasonsProps> = ({ details, tv_id }) => {
 			</div>
 			<div className="grid grid-cols-1 gap-10 max-xl:gap-7 || mt-10 max-lg:mt-6 max-md:mt-4">
 				{
-					details?.seasons?.map((season: any, idx: any) => {
+					details?.seasons?.map((season: {
+						id: number;
+						name: string;
+						poster_path: string | null;
+						air_date: number;
+						overview: string;
+						season_number: number;
+					}) => {
 						return (
 							season.name !== 'Specials' ?
 								<div key={season.id} className="">
@@ -38,7 +56,7 @@ const Seasons: React.FC<SeasonsProps> = ({ details, tv_id }) => {
 										</div>
 									</div>
 									<div className="">
-										<Episode season_number={season.season_number} season_name={season.name} tv_id={tv_id} />
+										<Episode season_number={season.season_number} tv_id={tv_id} />
 									</div>
 								</div> : null
 						)

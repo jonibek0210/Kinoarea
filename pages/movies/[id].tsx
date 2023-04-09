@@ -1,27 +1,16 @@
 /* eslint-disable @next/next/no-img-element */
+import { useEffect, useState } from 'react';
 import Head from 'next/head'
 import { GetServerSideProps } from "next"
-import YouTube from 'react-youtube';
+import axios from 'axios';
 
 import Layout from "@/layout/Layout"
 import Overview from "@/components/Overview";
 import Starring from "@/components/Starring";
-import Recommendations from "@/components/Recommendations";
-import Similar from '@/components/Similar';
-import axios from 'axios';
-import { useState } from 'react';
 import Trailer from '@/components/Trailer';
 import Companies from '@/components/Сompanies';
 import RecMovies from '@/components/RecMovies';
-
-interface IMovieProps {
-	actors: any
-	details: any
-	similar: any
-	recommendations: any
-	videos: any
-	external: any
-}
+import Collection from '@/components/Collection';
 
 const key = "1bb078d910403b47ba1478583d67aa0b"
 let url = 'https://api.themoviedb.org/3/movie/'
@@ -57,13 +46,13 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 			similar: similar.results,
 			recommendations: recommendations.results,
 			reviews: reviews,
-			videos: video2,
+			videos: video2.results,
 			external: external
 		}
 	}
 }
 
-const Movie: React.FC<IMovieProps> = ({ actors, details, similar, recommendations, videos, external }) => {
+const Movie: React.FC<IMoviePageProps> = ({ actors, details, similar, recommendations, videos, external }) => {
 
 	return (
 		<>
@@ -79,6 +68,13 @@ const Movie: React.FC<IMovieProps> = ({ actors, details, similar, recommendation
 				</section>
 				<section>
 					<Companies details={details} />
+				</section>
+				<section>
+					{
+						details.belongs_to_collection ?
+							<Collection collection={details.belongs_to_collection} />
+							: null
+					}
 				</section>
 				<section>
 					<Starring actors={actors} />

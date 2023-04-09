@@ -5,11 +5,20 @@ import { SiInstagram, SiWikidata } from 'react-icons/si'
 import { IoLogoTwitter } from 'react-icons/io'
 import { FaFacebookF, FaImdb, FaTiktok, FaYoutube } from 'react-icons/fa'
 import { ImLink } from 'react-icons/im'
-import { log } from 'console';
 
 interface INetworkProps {
-   details: any
-   external: any
+   details: {
+      homepage: string | null
+   }
+   external: {
+      facebook_id: string | null
+      imdb_id: string | null
+      instagram_id: string | null
+      twitter_id: string | null
+      wikidata_id: string | null
+      youtube_id: string | null
+      tiktok_id: string | null
+   }
 }
 
 const Network: React.FC<INetworkProps> = ({ external, details }) => {
@@ -18,7 +27,7 @@ const Network: React.FC<INetworkProps> = ({ external, details }) => {
       <div className="">
          <ul className="flex items-center gap-2">
             {
-               external.youtube_id ?
+               external?.youtube_id ?
                   <li className='bg-white/5 rounded-lg'>
                      <Tooltip title="instagram">
                         <IconButton>
@@ -29,7 +38,7 @@ const Network: React.FC<INetworkProps> = ({ external, details }) => {
                   : null
             }
             {
-               external.tiktok_id ?
+               external?.tiktok_id ?
                   <li className='bg-white/5 rounded-lg'>
                      <Tooltip title="instagram">
                         <IconButton>
@@ -40,7 +49,7 @@ const Network: React.FC<INetworkProps> = ({ external, details }) => {
                   : null
             }
             {
-               external.instagram_id ?
+               external?.instagram_id ?
                   <li className='bg-white/5 rounded-lg'>
                      <Tooltip title="instagram">
                         <IconButton>
@@ -51,7 +60,7 @@ const Network: React.FC<INetworkProps> = ({ external, details }) => {
                   : null
             }
             {
-               external.wikidata_id ?
+               external?.wikidata_id ?
                   <li className='bg-white/5 rounded-lg'>
                      <Tooltip title="wikidata">
                         <IconButton>
@@ -62,7 +71,7 @@ const Network: React.FC<INetworkProps> = ({ external, details }) => {
                   : null
             }
             {
-               external.twitter_id ?
+               external?.twitter_id ?
                   <li className='bg-white/5 rounded-lg'>
                      <Tooltip title="twitter">
                         <IconButton>
@@ -73,8 +82,7 @@ const Network: React.FC<INetworkProps> = ({ external, details }) => {
                   : null
             }
             {
-               external.facebook_id ?
-
+               external?.facebook_id ?
                   <li className='bg-white/5 rounded-lg'>
                      <Tooltip title="facebook">
                         <IconButton>
@@ -85,7 +93,7 @@ const Network: React.FC<INetworkProps> = ({ external, details }) => {
                   : null
             }
             {
-               external.imdb_id ?
+               external?.imdb_id ?
                   <li className='bg-white/5 rounded-lg'>
                      <Tooltip title="IMDb">
                         <IconButton>
@@ -96,7 +104,7 @@ const Network: React.FC<INetworkProps> = ({ external, details }) => {
                   : null
             }
             {
-               details.homepage ?
+               details?.homepage ?
                   <li className='border-l border-gray-500 pl-1'>
                      <Tooltip title="Посетить Домашнюю страницу">
                         <IconButton>

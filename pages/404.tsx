@@ -4,7 +4,7 @@ import * as React from 'react';
 
 interface IPageNotFoundProps {
 }
-// font-family: 'PT Sans', sans-serif;
+
 const PageNotFound: React.FunctionComponent<IPageNotFoundProps> = (props) => {
    return (
       <Layout>

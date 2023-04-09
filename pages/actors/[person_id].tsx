@@ -11,7 +11,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-
+import { IActorPageProps } from '@/types/dynamicpages/actor';
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 	const key = "1bb078d910403b47ba1478583d67aa0b"
@@ -26,56 +26,30 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 	const external_ids = await fetch(`https://api.themoviedb.org/3/person/${person_id}/external_ids?api_key=${key}&language=en-US`)
 	const external = await external_ids.json()
 
-	const movie_credits = await fetch(`https://api.themoviedb.org/3/person/${person_id}/movie_credits?api_key=${key}&language=en-US`)
-	const movies = await movie_credits.json()
-
-	const TV_credits = await fetch(`https://api.themoviedb.org/3/person/${person_id}/tv_credits?api_key=${key}&language=en-US`)
-	const series = await TV_credits.json()
-
 	const combinedCredits = await fetch(`https://api.themoviedb.org/3/person/${person_id}/combined_credits?api_key=${key}&language=en-US`)
 	const combined_credits = await combinedCredits.json()
 
 	const person_translations = await fetch(`https://api.themoviedb.org/3/person/${person_id}/translations?api_key=${key}&language=en-US`)
 	const translations = await person_translations.json()
 
-	const person_changes = await fetch(`https://api.themoviedb.org/3/person/${person_id}/changes?api_key=${key}&page=1`)
-	const changes = await person_changes.json()
-
-
-
 	return {
 		props: {
 			details: details,
 			images: images.profiles,
-			movies: movies.cast,
-			series: series.cast,
 			external: external,
 			combined_credits: combined_credits,
 			translations: translations.translations,
-			changes: changes
 		}
 	}
 }
 
-interface IPersonProps {
-	details: any
-	images: any
-	movies: any
-	external: any
-	series: any
-	combined_credits: any
-	translations: any
-	changes: any
-}
-
-const Person: React.FC<IPersonProps> = ({ details, images, movies, external, series, combined_credits, translations, changes }) => {
-	const [age, setAge] = useState('0');
-
+const Person: React.FC<IActorPageProps> = ({ details, images, external, combined_credits, translations }) => {
+	const [age, setAge] = useState<any>(0);
 	const handleChange = (event: SelectChangeEvent) => {
-		setAge(event.target.value);
+		setAge(+event.target.value);
 	};
 
-	console.log(changes);
+	const info: string = translations[age].data.biography
 
 	return (
 		<>
@@ -97,11 +71,11 @@ const Person: React.FC<IPersonProps> = ({ details, images, movies, external, ser
 								labelId="demo-select-small"
 								id="demo-select-small"
 								value={age}
-								label="Age"
+								label="translations"
 								onChange={handleChange}
 							>
 								{
-									translations.map((item: any, idx: any) => {
+									translations.map((item: { name: string }, idx: number) => {
 										return <MenuItem key={idx} value={idx}>{item.name}</MenuItem>
 									})
 								}
@@ -109,7 +83,7 @@ const Person: React.FC<IPersonProps> = ({ details, images, movies, external, ser
 						</FormControl>
 					</div>
 					<div className="">
-						<p className='text-xl max-lg:text-lg max-md:text-base || indent-10 max-xl:indent-7 max-lg:indent-5 max-md:indent-3 || leading-10 max-xl:leading-8 max-md:leading-6 || text-white'>{translations[age].data.biography || `translation does not exist "${translations[age].name}"`}</p>
+						<p className='text-xl max-lg:text-lg max-md:text-base || indent-10 max-xl:indent-7 max-lg:indent-5 max-md:indent-3 || leading-10 max-xl:leading-8 max-md:leading-6 || text-white'>{info || `translation does not exist "${translations[age].name}"`}</p>
 					</div>
 				</section>
 				<section>
@@ -122,9 +96,9 @@ const Person: React.FC<IPersonProps> = ({ details, images, movies, external, ser
 					</div>
 					<div className="grid grid-cols-5 max-xl:grid-cols-4	max-lg:grid-cols-3 max-md:grid-cols-2 gap-5 mt-8">
 						{
-							images.map((img: any) => {
+							images.map((img: { file_path: string | null, vote_average: number }, idx: number) => {
 								return (
-									<div key={img.file_path} className="" >
+									<div key={idx} className="" >
 										<div className="rounded-lg overflow-hidden">
 											<img src={`https://image.tmdb.org/t/p/w500${img?.file_path}`} alt="" />
 										</div>

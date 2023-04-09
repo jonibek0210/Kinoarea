@@ -1,13 +1,8 @@
 import { useState } from "react";
 import People from "./children/People"
 
-interface IStarringProps {
-	actors: any
-}
-
 const Starring: React.FC<IStarringProps> = ({ actors }) => {
-
-	const [all, setAll] = useState(12);
+	const [all, setAll] = useState<number>(12);
 
 	return (
 		<div className="mt-20 max-lg:mt-14 max-md:mt-10 max-sm:mt-8">
@@ -16,7 +11,18 @@ const Starring: React.FC<IStarringProps> = ({ actors }) => {
 			</div>
 			<div className="grid grid-cols-4 max-xl:grid-cols-4 max-md:grid-cols-3 max-sm:grid-cols-2 || gap-5 max-lg:gap-4 || mt-10 max-lg:mt-6 max-md:mt-4">
 				{
-					actors?.cast?.slice(0, all)?.map((item: any) => <People key={item.id} item={item} />)
+					actors?.cast?.slice(0, all)?.map((item: {
+						id: number;
+						name: string;
+						character: string;
+						job: string;
+						profile_path: string | null;
+						roles: any;
+						jobs: any;
+					}
+					) =>
+						<People key={item.id} item={item} />
+					)
 				}
 			</div>
 			{
@@ -27,7 +33,17 @@ const Starring: React.FC<IStarringProps> = ({ actors }) => {
 						</div>
 						<div className="grid grid-cols-4 max-xl:grid-cols-4 max-md:grid-cols-3 max-sm:grid-cols-2 || gap-5 max-lg:gap-4 || mt-10 max-lg:mt-6 max-md:mt-4">
 							{
-								actors?.crew?.slice(0, actors.crew.length)?.map((item: any) => <People key={item.id} item={item} />)
+								actors?.crew?.slice(0, actors.crew.length)?.map((item: {
+									id: number;
+									name: string;
+									character: string;
+									job: string;
+									profile_path: string | null;
+									roles: any;
+									jobs: any;
+								}) =>
+									<People key={item.id} item={item} />
+								)
 							}
 						</div>
 					</div>

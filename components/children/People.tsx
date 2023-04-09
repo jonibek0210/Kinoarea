@@ -2,7 +2,15 @@
 import Link from "next/link"
 
 interface IPeopleProps {
-   item: any
+   item: {
+      id: number;
+      name: string;
+      character: string;
+      job?: string;
+      profile_path: string | null;
+      roles?: any;
+      jobs?: any;
+   }
 }
 
 const People: React.FC<IPeopleProps> = ({ item }) => {
@@ -28,12 +36,12 @@ const People: React.FC<IPeopleProps> = ({ item }) => {
             }
             {
                item.roles ?
-                  <p className="font-bold truncate || text-base text-yellow-300">{item?.roles[0]?.character}</p>
+                  <p className="font-bold truncate || text-base text-yellow-300">{item.roles[0].character}</p>
                   : null
             }
             {
                item.jobs ?
-                  <p className="font-bold truncate || text-base text-yellow-300">{item?.jobs[0]?.job}</p>
+                  <p className="font-bold truncate || text-base text-yellow-300">{item.jobs[0].job}</p>
                   : null
             }
          </div>

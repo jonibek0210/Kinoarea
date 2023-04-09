@@ -1,6 +1,7 @@
 import Layout from '@/layout/Layout';
 import People from '@/components/children/People';
 import Head from 'next/head';
+import { IActorsPageProps } from '@/types/pages/actorspage';
 
 export const getStaticProps = async () => {
 	const key = "1bb078d910403b47ba1478583d67aa0b"
@@ -16,10 +17,20 @@ export const getStaticProps = async () => {
 }
 
 interface IActorsProps {
-	persons: any
+	persons: [
+		{
+			id: number
+			name: string
+			character: string
+			job: string
+			profile_path: string | null
+			roles: any
+			jobs: any
+		}
+	]
 }
 
-const Actors: React.FC<IActorsProps> = ({ persons }) => {
+const Actors: React.FC<IActorsPageProps> = ({ persons }) => {
 
 	return (
 		<Layout>
@@ -37,7 +48,17 @@ const Actors: React.FC<IActorsProps> = ({ persons }) => {
 				</div>
 				<div className="grid grid-cols-4 max-lg:grid-cols-3 max-md:grid-cols-2 || gap-5 max-md:gap-x-2 max-md:gap-y-4 || pt-12 max-lg:pt-7 max-md:pt-5 max-sm:pt-4">
 					{
-						persons.map((item: any) => <People key={item.id} item={item} />)
+						persons.map((item: {
+							id: number
+							name: string
+							character: string
+							job: string
+							profile_path: string | null
+							roles: any
+							jobs: any
+						}) =>
+							<People key={item.id} item={item} />
+						)
 					}
 				</div>
 			</div>

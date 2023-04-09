@@ -8,16 +8,15 @@ import { IoLogoVk, IoMdClose } from "react-icons/io"
 import { RxHamburgerMenu } from "react-icons/rx"
 import { AiOutlineInstagram, AiOutlineTwitter } from "react-icons/ai"
 import Link from "next/link";
-import Movie from "./children/Movie";
 import SearchCard from "./children/SearchCard";
 
-const Header: React.FC = (props) => {
-	const [burger, setBurger] = useState(false)
-	const [search, setSearch] = useState(false)
+const Header: React.FC = () => {
 	const key = "1bb078d910403b47ba1478583d67aa0b"
-	const [searchText, setSearchText] = useState('')
-	const [content, setContent] = useState([]);
-	const [type, setType] = useState('movie')
+	const [burger, setBurger] = useState<boolean>(false)
+	const [search, setSearch] = useState<boolean>(false)
+	const [searchText, setSearchText] = useState<string>('')
+	const [content, setContent] = useState<any>([]);
+	const [type, setType] = useState<string>('movie')
 
 	const fetchSearch = async () => {
 		const { data } = await axios.get(
@@ -33,13 +32,13 @@ const Header: React.FC = (props) => {
 
 	return (
 		<>
-			<div className={search ? "w-screen h-screen fixed top-0 left-0 px-6 z-20 ease-out duration-500" : 'fixed -top-full left-0 px-6 z-20 ease-out duration-500'}>
-				<div className={search ? "backdrop-blur-sm bg-black/90 w-screen h-screen fixed top-0 left-0 z-[-1]" : "backdrop-blur-sm bg-black/90 w-screen h-screen fixed -top-full left-0 z-[-1]"}></div>
+			<div className={search ? "w-screen h-screen fixed top-0 left-0 px-6 z-20 ease-out duration-500" : 'fixed -top-[200%] left-0 px-6 z-20 ease-out duration-500'}>
+				<div className={search ? "backdrop-blur-sm bg-black/90 w-screen h-screen fixed top-0 left-0 z-[-1]" : "backdrop-blur-sm bg-black/90 w-screen h-screen fixed -top-[200%] left-0 z-[-1]"}></div>
 
 				<div className="container m-auto w-full flex mt-10 max-md:mt-5">
 					<div className="w-full">
 						<div className="flex justify-center">
-							<Image src="/images/logo.svg" alt="logo" width="130" height="30" />
+							<Image className="w-auto h-auto" src="/images/logo.svg" alt="logo" width="130" height="30" />
 						</div>
 						<div className="flex mt-5">
 							<div className="relative w-full">
@@ -52,7 +51,7 @@ const Header: React.FC = (props) => {
 						<div className="container m-auto flex max-md:flex-col items-center justify-around">
 							<button onClick={() => setType('movie')} className={type !== 'movie' ? "w-full pt-5 border-b-[4px] border-transparent text-xl font-medium text-gray-200 hover:border-[#5e78df8b] hover:bg-[#ffffff10]" : "w-full pt-5 border-b-4 border-transparent text-xl font-medium text-gray-200 hover:bg-[#ffffff10] border-[#3657CB] bg-gradient-to-t from-[#3657CB30] to-transparent"}>Movies</button>
 							<button onClick={() => setType('person')} className={type !== 'person' ? "w-full pt-5 border-b-[4px] border-transparent text-xl font-medium text-gray-200 hover:border-[#5e78df8b] hover:bg-[#ffffff10]" : "w-full pt-5 border-b-4 border-transparent text-xl font-medium text-gray-200 hover:bg-[#ffffff10] border-[#3657CB] bg-gradient-to-t from-[#3657CB30] to-transparent"}>Peoples</button>
-							<button onClick={() => setType('tv')} className={type !== 'tv' ? "w-full pt-5 border-b-[4px] border-transparent text-xl font-medium text-gray-200 hover:border-[#5e78df8b] hover:bg-[#ffffff10]" : "w-full pt-5 border-b-4 border-transparent text-xl font-medium text-gray-200 hover:bg-[#ffffff10] border-[#3657CB] bg-gradient-to-t from-[#3657CB30] to-transparent"}>TV</button>
+							<button onClick={() => setType('tv')} className={type !== 'tv' ? "w-full pt-5 border-b-[4px] border-transparent text-xl font-medium text-gray-200 hover:border-[#5e78df8b] hover:bg-[#ffffff10]" : "w-full pt-5 border-b-4 border-transparent text-xl font-medium text-gray-200 hover:bg-[#ffffff10] border-[#3657CB] bg-gradient-to-t from-[#3657CB30] to-transparent"}>Series</button>
 						</div>
 					</div>
 					<div className="max-md:absolute max-md:right-10 flex items-center justify-center">
@@ -60,13 +59,22 @@ const Header: React.FC = (props) => {
 					</div>
 				</div>
 				<div className="h-full">
-					<div className="container m-auto grid max-md:grid-cols-2 gap-5 overflow-auto h-3/5 mt-5 pr-2">
+					<div className="container m-auto grid max-md:grid-cols-2 gap-5 max-sm:gap-2 overflow-auto h-3/5 mt-5 pr-2">
 						{
-							content.length
-								?
-								content.map((item: any) => <SearchCard key={item.id} item={item} type={type} />)
-								:
-								null
+							content.length ?
+								content.map((item: {
+									id: number
+									poster_path: string | null
+									profile_path: string | null
+									name: string
+									title: string
+									release_date: string
+									first_air_date: string
+									vote_average: number
+								}) =>
+									<SearchCard key={item.id} item={item} type={type} />
+								)
+								: null
 						}
 					</div>
 				</div>
@@ -89,7 +97,7 @@ const Header: React.FC = (props) => {
 							<button><AiOutlineTwitter size={17} className="text-[#686868] hover:text-white ease-in duration-100 cursor-pointer " /></button>
 						</div>
 					</div>
-					<div className={!burger ? "w-full || m-auto max-xl:mt-5 || px-20 max-xl:px-8 || max-md:absolute max-md:-top-full ease-out duration-300" : "w-full max-md:h-screen || m-auto max-xl:mt-5 || px-20 max-xl:px-8 || max-md:fixed max-md:-top-5 max-md:left-0 || max-md:z-50 max-md:backdrop-blur-sm max-md:bg-black/30 ease-out duration-300"}>
+					<div className={!burger ? "w-full || m-auto max-xl:mt-5 || px-20 max-xl:px-8 || max-md:absolute max-md:-top-[200%] ease-out duration-300" : "w-full max-md:h-screen || m-auto max-xl:mt-5 || px-20 max-xl:px-8 || max-md:fixed max-md:-top-5 max-md:left-0 || max-md:z-50 max-md:backdrop-blur-sm max-md:bg-black/30 ease-out duration-300"}>
 						<div className="hidden max-md:flex max-md:justify-center max-md:my-5">
 							<Image src="/images/logo.svg" alt="logo" width="130" height="30" />
 							<button onClick={() => setBurger(false)} className="absolute right-5 top-5"><IoMdClose size={30} color="#ffffff" /></button>
