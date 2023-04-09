@@ -7,7 +7,8 @@ interface IFooter {
 
 }
 
-const Footer: React.FC = (props) => {
+const Footer: React.FC<IFooter> = ({ }) => {
+
    return (
       <footer className="container m-auto px-6 flex flex-col items-center pb-10">
          <div className="w-1/4 max-md:w-2/4 flex justify-between || mt-14 max-xl:mt10 max-md:mt-8">

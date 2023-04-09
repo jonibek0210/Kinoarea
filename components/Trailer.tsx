@@ -9,15 +9,21 @@ import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 
 interface ITrailerProps {
-	videos: any
+	videos: [
+		{
+			key: string;
+			type: string;
+			official: boolean;
+		}
+	]
 }
 
 const Trailer: React.FC<ITrailerProps> = ({ videos }) => {
-	const trailer = videos?.results?.find((vid: any) => vid.type == 'Trailer' && vid.official === true)
-	const key = trailer ? trailer.key : videos?.results[0]?.key
+	const trailer: any = videos.find((vid: { type: string; official: boolean; }) => vid.type === 'Trailer' && vid.official === true)
+	const key: string = trailer ? trailer.key : videos[0]?.key
 
 	return (
-		<div className="mt-20 max-lg:mt-14 max-md:mt-10 max-sm:mt-8">
+		<div id='trailer' className="mt-20 max-lg:mt-14 max-md:mt-10 max-sm:mt-8">
 			<div className="">
 				<h2 className='text-white font-bold || text-6xl max-xl:text-5xl max-lg:text-4xl max-md:text-3xl max-sm:text-2xl'>Trailer</h2>
 			</div>

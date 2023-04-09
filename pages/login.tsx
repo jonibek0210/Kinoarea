@@ -4,7 +4,7 @@ import * as React from 'react';
 interface IloginProps {
 }
 
-const login: React.FunctionComponent<IloginProps> = (props) => {
+const login: React.FC<IloginProps> = (props) => {
    return (
       <div className="w-screen h-screen bg-[#191E2E]">
          <div className="max-w-[500px] w-full px-10 py-5 absolute top-1/2 left-1/2 flex flex-col -translate-x-1/2 -translate-y-1/2">

@@ -5,18 +5,11 @@ import Image from 'next/image';
 import Layout from '@/layout/Layout';
 import Movie from '@/components/children/Movie';
 
-import { IMovies } from '@/types/data';
+import { IMoviesPageProps } from '@/types/pages/moviespage';
 
 import { RxHamburgerMenu } from "react-icons/rx"
 import { IoMdClose } from "react-icons/io";
 import Head from 'next/head';
-
-interface IMoviesProps {
-	movies: any
-	popular: any
-	nowPlaying: any
-	topRated: any
-}
 
 export const getStaticProps = async () => {
 	const key = "1bb078d910403b47ba1478583d67aa0b"
@@ -43,8 +36,7 @@ export const getStaticProps = async () => {
 	}
 }
 
-const Movies: React.FC<IMoviesProps> = ({ movies, popular, nowPlaying, topRated }) => {
-	console.log(topRated);
+const Movies: React.FC<IMoviesPageProps> = ({ movies, popular, nowPlaying, topRated }) => {
 	const [imgSrc, setImgSrc] = useState('')
 	const random = Math.floor(Math.random() * 20);
 	const [burger, setBurger] = useState(false)
@@ -55,7 +47,7 @@ const Movies: React.FC<IMoviesProps> = ({ movies, popular, nowPlaying, topRated 
 		if (typeof window !== undefined) {
 			setImgSrc(`https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces${movies[random]?.backdrop_path}`)
 		}
-	}, [])
+	}, [movies, random])
 
 	return (
 		<Layout>
@@ -94,7 +86,17 @@ const Movies: React.FC<IMoviesProps> = ({ movies, popular, nowPlaying, topRated 
 					</div>
 					<div className="grid grid-cols-4 max-lg:grid-cols-3 max-md:grid-cols-2 || gap-5 max-md:gap-x-2 max-md:gap-y-4 || pt-12 max-lg:pt-7 max-md:pt-5 max-sm:pt-4">
 						{
-							movies.map((item: { id: any; }) => <Movie key={item.id} item={item} />)
+							movies.map((item: {
+								id: number;
+								title: string;
+								name: string;
+								vote_average: number;
+								poster_path: string | null;
+								first_air_date: string;
+								release_date: string;
+							}) =>
+								<Movie key={item.id} item={item} />
+							)
 						}
 					</div>
 				</div>
@@ -108,7 +110,17 @@ const Movies: React.FC<IMoviesProps> = ({ movies, popular, nowPlaying, topRated 
 					</div>
 					<div className="grid grid-cols-4 max-lg:grid-cols-3 max-md:grid-cols-2 || gap-5 max-md:gap-x-2 max-md:gap-y-4 || pt-12 max-lg:pt-7 max-md:pt-5 max-sm:pt-4">
 						{
-							popular.map((item: { id: any; }) => <Movie key={item.id} item={item} />)
+							popular.map((item: {
+								id: number;
+								title: string;
+								name: string;
+								vote_average: number;
+								poster_path: string | null;
+								first_air_date: string;
+								release_date: string;
+							}) =>
+								<Movie key={item.id} item={item} />
+							)
 						}
 					</div>
 				</div>
@@ -122,7 +134,17 @@ const Movies: React.FC<IMoviesProps> = ({ movies, popular, nowPlaying, topRated 
 					</div>
 					<div className="grid grid-cols-4 max-lg:grid-cols-3 max-md:grid-cols-2 || gap-5 max-md:gap-x-2 max-md:gap-y-4 || pt-12 max-lg:pt-7 max-md:pt-5 max-sm:pt-4">
 						{
-							nowPlaying.map((item: { id: any; }) => <Movie key={item.id} item={item} />)
+							nowPlaying.map((item: {
+								id: number;
+								title: string;
+								name: string;
+								vote_average: number;
+								poster_path: string | null;
+								first_air_date: string;
+								release_date: string;
+							}) =>
+								<Movie key={item.id} item={item} />
+							)
 						}
 					</div>
 				</div>
@@ -136,7 +158,17 @@ const Movies: React.FC<IMoviesProps> = ({ movies, popular, nowPlaying, topRated 
 					</div>
 					<div className="grid grid-cols-4 max-lg:grid-cols-3 max-md:grid-cols-2 || gap-5 max-md:gap-x-2 max-md:gap-y-4 || pt-12 max-lg:pt-7 max-md:pt-5 max-sm:pt-4">
 						{
-							topRated.map((item: { id: any; }) => <Movie key={item.id} item={item} />)
+							topRated.map((item: {
+								id: number;
+								title: string;
+								name: string;
+								vote_average: number;
+								poster_path: string | null;
+								first_air_date: string;
+								release_date: string;
+							}) =>
+								<Movie key={item.id} item={item} />
+							)
 						}
 					</div>
 				</div>

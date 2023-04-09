@@ -1,19 +1,14 @@
 /* eslint-disable @next/next/no-img-element */
-
-import Network from "./children/Network";
 import MovieInfo from "./MovieInfo"
 import Chart from "./children/Chart"
+import Network from "./children/Network";
 
 import { AiFillDislike, AiFillHeart, AiFillLike } from "react-icons/ai"
 import { VscPlay } from 'react-icons/vsc'
 
-export interface IOverviewProps {
-	details: any
-	external: any
-}
+import { IOverviewProps } from "@/types/components/overview";
 
 const Overview: React.FC<IOverviewProps> = ({ details, external }) => {
-
 	const img = details?.poster_path ? `https://image.tmdb.org/t/p/w500${details?.poster_path}` : 'https://www.themoviedb.org/assets/2/v4/glyphicons/basic/glyphicons-basic-38-picture-grey-c2ebdbb057f2a7614185931650f8cee23fa137b93812ccb132b9df511df1cfac.svg'
 
 	return (
@@ -35,17 +30,19 @@ const Overview: React.FC<IOverviewProps> = ({ details, external }) => {
 								<img className='object-cover hidden max-md:block' src={img} alt={details?.title} />
 							</div>
 							<div className="flex max-md:flex-col">
-								<Chart voteAverage={details?.vote_average} />
-								<Chart voteAverage={details?.vote_average} />
+								<Chart voteAverage={details.vote_average} />
+								<Chart voteAverage={details.vote_average} />
 							</div>
 						</div>
 						<div className="mt-3">
 							<p className='mt-2 text-xl max-xl:text-lg max-lg:text-base max-sm:text-sm'>{details?.overview}</p>
 						</div>
 						<div className="w-full max-md:w-full flex max-xl:flex-col items-center max-xl:items-start max-md:items-center justify-between max-xl:gap-4 mt-8">
-							<div className="">
-								<button className='flex items-center gap-3 text-lg py-5 px-9 rounded-lg border-[2px] border-white'><VscPlay className='text-xl' color='#fff' /> Смотреть трейлер</button>
-							</div>
+							<a href="#trailer">
+								<div className="">
+									<button className='flex items-center gap-3 text-lg py-5 px-9 rounded-lg border-[2px] border-white'><VscPlay className='text-xl' color='#fff' /> Смотреть трейлер</button>
+								</div>
+							</a>
 							<Network external={external} details={details} />
 						</div>
 					</div>

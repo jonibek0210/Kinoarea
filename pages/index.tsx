@@ -1,9 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 import { useState, useEffect } from 'react';
+import { useHttp } from '@/hook/http.hook';
 import Head from 'next/head'
 import { Inter } from '@next/font/google'
-
-import { IMovies } from '@/types/data';
 
 import Layout from '@/layout/Layout'
 import Movies from '@/components/Movies'
@@ -11,6 +10,7 @@ import Popular from '@/components/Popular'
 import PopularPersons from '@/components/PopularPersons';
 import Movie from '@/components/children/Movie';
 import Link from 'next/link';
+import { IHomePageProps } from '@/types/pages/homepage';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -49,23 +49,24 @@ export const getStaticProps = async () => {
 	}
 }
 
-interface IHomeProps {
-	movies: any
-	popular: any
-	persons: any
-	TV: any
-	genres: any
-}
+const Home: React.FC<IHomePageProps> = ({ movies, popular, persons, TV }) => {
+	const [imgSrc, setImgSrc] = useState<string>('')
+	const random: number = Math.floor(Math.random() * 20);
 
-const Home: React.FC<IHomeProps> = ({ movies, popular, persons, TV, genres }) => {
-	const [imgSrc, setImgSrc] = useState('')
-	const random = Math.floor(Math.random() * 20);
+	const { loading, error, request } = useHttp();
 
 	useEffect(() => {
 		if (typeof window !== undefined) {
-			setImgSrc(`https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces${movies[random]?.backdrop_path}`)
+			setImgSrc(`https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces${movies[random]?.backdrop_path} `)
 		}
-	}, [])
+	}, [movies, random])
+
+	if (loading) {
+		return <span className='text-9xl text-red-600 absolute top-1/2 left-1/2 z-50'>loading</span>;
+	}
+	if (error) {
+		return <span>error</span>;
+	}
 
 	return (
 		<Layout>
@@ -81,7 +82,7 @@ const Home: React.FC<IHomeProps> = ({ movies, popular, persons, TV, genres }) =>
 					<div className="absolute left-0 bottom-0 w-full h-full bg-gradient-to-t from-[#1e2538] to-transparent"></div>
 				</div>
 				<section>
-					<Movies movies={movies} genres={genres} />
+					<Movies movies={movies} />
 				</section>
 				<section className='mt-8'>
 					<Popular popular={popular} />
@@ -92,17 +93,27 @@ const Home: React.FC<IHomeProps> = ({ movies, popular, persons, TV, genres }) =>
 				<section>
 					<div className="mt-32 max-xl:mt-24 max-lg:mt-16 max-md:mt-10 max-sm:mt-8">
 						<div className="">
-							<h1 className='text-5xl max-xl:text-4xl max-md:text-2xl || font-black text-white'>ТВ с самым высоким рейтингом</h1>
+							<h1 className='text-5xl max-xl:text-4xl max-md:text-2xl || font-black text-white'>top rated TV</h1>
 						</div>
 						<div className="grid grid-cols-4 max-lg:grid-cols-3 max-md:grid-cols-2 || gap-5 max-md:gap-x-2 max-md:gap-y-4 || pt-12 max-lg:pt-7 max-md:pt-5 max-sm:pt-4">
 							{
-								TV.slice(0, 12).map((item: { id: any; }) => <Movie key={item.id} item={item} />)
+								TV.slice(0, 12).map((item: {
+									id: number;
+									title: string;
+									name: string;
+									vote_average: number;
+									poster_path: string | null;
+									first_air_date: string;
+									release_date: string;
+								}) =>
+									<Movie key={item.id} item={item} />
+								)
 							}
 						</div>
 					</div>
 					<div className="flex justify-center mt-8">
 						<Link href={'/series'}>
-							<button className='px-12 max-xl:px-8 max-md:px-7 || py-5 max-xl:py-4 max-md:py-3 || border-[2px] rounded-lg || text-lg  || font-bold || text-white border-white'>Все сериалы</button>
+							<button className='px-12 max-xl:px-8 max-md:px-7 || py-5 max-xl:py-4 max-md:py-3 || border-[2px] rounded-lg || text-lg  || font-bold || text-white border-white'>All сериалы</button>
 						</Link>
 					</div>
 				</section>

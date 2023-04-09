@@ -4,13 +4,8 @@ import { useState, useEffect } from 'react';
 import Layout from '@/layout/Layout';
 import Movie from '@/components/children/Movie';
 import Head from 'next/head';
-
-interface ISeriesProps {
-	TV: any
-	TVPopular: any
-	TVOn_the_air: any
-	TVAiring_today: any
-}
+import { useHttp } from '@/hook/http.hook';
+import { ISeriesPageProps } from '@/types/pages/seriespage';
 
 export const getStaticProps = async () => {
 	const key = "1bb078d910403b47ba1478583d67aa0b"
@@ -37,9 +32,8 @@ export const getStaticProps = async () => {
 	}
 }
 
-const Series: React.FC<ISeriesProps> = ({ TV, TVPopular, TVOn_the_air, TVAiring_today }) => {
-
-	console.log(TV);
+const Series: React.FC<ISeriesPageProps> = ({ TV, TVPopular, TVOn_the_air, TVAiring_today }) => {
+	const { loading, error, request } = useHttp();
 
 	const [imgSrc, setImgSrc] = useState('')
 	const random = Math.floor(Math.random() * 20);
@@ -48,7 +42,14 @@ const Series: React.FC<ISeriesProps> = ({ TV, TVPopular, TVOn_the_air, TVAiring_
 		if (typeof window !== undefined) {
 			setImgSrc(`https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces${TV[random]?.backdrop_path}`)
 		}
-	}, [])
+	}, [TV, random])
+
+	if (loading) {
+		return <span className='text-9xl text-red-600 absolute top-0 left-0 z-50'>loading</span>;
+	}
+	if (error) {
+		return <span>error</span>;
+	}
 
 	return (
 		<>
@@ -72,7 +73,17 @@ const Series: React.FC<ISeriesProps> = ({ TV, TVPopular, TVOn_the_air, TVAiring_
 						</div>
 						<div className="grid grid-cols-4 max-lg:grid-cols-3 max-md:grid-cols-2 || gap-5 max-md:gap-x-2 max-md:gap-y-4 || pt-12 max-lg:pt-7 max-md:pt-5 max-sm:pt-4">
 							{
-								TV.map((item: { id: any; }) => <Movie key={item.id} item={item} />)
+								TV.map((item: {
+									id: number;
+									title: string;
+									name: string;
+									vote_average: number;
+									poster_path: string | null;
+									first_air_date: string;
+									release_date: string;
+								}) =>
+									<Movie key={item.id} item={item} />
+								)
 							}
 						</div>
 					</div>
@@ -86,7 +97,17 @@ const Series: React.FC<ISeriesProps> = ({ TV, TVPopular, TVOn_the_air, TVAiring_
 						</div>
 						<div className="grid grid-cols-4 max-lg:grid-cols-3 max-md:grid-cols-2 || gap-5 max-md:gap-x-2 max-md:gap-y-4 || pt-12 max-lg:pt-7 max-md:pt-5 max-sm:pt-4">
 							{
-								TVPopular.map((item: { id: any; }) => <Movie key={item.id} item={item} />)
+								TVPopular.map((item: {
+									id: number;
+									title: string;
+									name: string;
+									vote_average: number;
+									poster_path: string | null;
+									first_air_date: string;
+									release_date: string;
+								}) =>
+									<Movie key={item.id} item={item} />
+								)
 							}
 						</div>
 					</div>
@@ -100,7 +121,17 @@ const Series: React.FC<ISeriesProps> = ({ TV, TVPopular, TVOn_the_air, TVAiring_
 						</div>
 						<div className="grid grid-cols-4 max-lg:grid-cols-3 max-md:grid-cols-2 || gap-5 max-md:gap-x-2 max-md:gap-y-4 || pt-12 max-lg:pt-7 max-md:pt-5 max-sm:pt-4">
 							{
-								TVOn_the_air.map((item: { id: any; }) => <Movie key={item.id} item={item} />)
+								TVOn_the_air.map((item: {
+									id: number;
+									title: string;
+									name: string;
+									vote_average: number;
+									poster_path: string | null;
+									first_air_date: string;
+									release_date: string;
+								}) =>
+									<Movie key={item.id} item={item} />
+								)
 							}
 						</div>
 					</div>
@@ -114,7 +145,17 @@ const Series: React.FC<ISeriesProps> = ({ TV, TVPopular, TVOn_the_air, TVAiring_
 						</div>
 						<div className="grid grid-cols-4 max-lg:grid-cols-3 max-md:grid-cols-2 || gap-5 max-md:gap-x-2 max-md:gap-y-4 || pt-12 max-lg:pt-7 max-md:pt-5 max-sm:pt-4">
 							{
-								TVAiring_today.map((item: { id: any; }) => <Movie key={item.id} item={item} />)
+								TVAiring_today.map((item: {
+									id: number;
+									title: string;
+									name: string;
+									vote_average: number;
+									poster_path: string | null;
+									first_air_date: string;
+									release_date: string;
+								}) =>
+									<Movie key={item.id} item={item} />
+								)
 							}
 						</div>
 					</div>

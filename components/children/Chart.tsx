@@ -1,21 +1,44 @@
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { useState, useEffect } from "react";
 import { Doughnut } from "react-chartjs-2";
 
-const Chart: React.FC<any> = (props) => {
-   const { voteAverage } = props
+interface IChartProps {
+   voteAverage: number
+}
+
+const Chart: React.FC<IChartProps> = ({ voteAverage }) => {
+   const [rate, setRate] = useState<any>('');
+   const [rateBG, setRateBG] = useState<any>('');
 
    ChartJS.register(ArcElement, Tooltip, Legend);
-   let a = voteAverage?.toFixed(1)
-   let b = 10
 
-   let c = a - b
+   const a: number = +voteAverage.toFixed(1)
+   const b: number = 10
+   const c: number = a - b
+
+   useEffect(() => {
+      if (a <= 10 && a > 7) {
+         setRate(`#28FF04`)
+         setRateBG(`#28FF0440`)
+      } else if (a <= 7 && a > 5) {
+         setRate(`#78CB36`)
+         setRateBG(`#78CB3640`)
+      } else if (a <= 5 && a > 3) {
+         setRate(`#CB6C36`)
+         setRateBG(`#CB6C3640`)
+      } else if (a <= 3) {
+         setRate(`#FF0000`)
+         setRateBG(`#FF000040`)
+      }
+   }, [a])
+
    const data = {
       labels: [],
       datasets: [
          {
             labe: '5000',
             data: [a, c],
-            backgroundColor: ['green', '#d3080070'],
+            backgroundColor: [`${rate}`, `${rateBG}`],
             border: 'black',
             borderColor: 'transparent'
          }
@@ -23,7 +46,6 @@ const Chart: React.FC<any> = (props) => {
    }
 
    const options = {}
-
    const textCenter = {
       id: 'textCenter',
       beforeDatasetsDraw(chart: { getDatasetMeta?: any; ctx?: any; data?: any; }, args: any, pluginOptions: any) {

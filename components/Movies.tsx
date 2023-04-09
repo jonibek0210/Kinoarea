@@ -4,18 +4,26 @@ import Image from 'next/image';
 import Movie from './children/Movie';
 
 import { RxHamburgerMenu } from "react-icons/rx"
-import { IMovies } from '@/types/data';
 import { IoMdClose } from "react-icons/io";
 import Link from 'next/link';
 
 export interface IMoviesProps {
-	movies: any
-	genres: any
+	movies: [
+		{
+			id: number;
+			title: string;
+			name: string;
+			vote_average: number;
+			poster_path: string | null;
+			first_air_date: string;
+			release_date: string;
+		}
+	]
 }
 
-const Movies: React.FC<IMoviesProps> = ({ movies, genres }) => {
-	const [burger, setBurger] = useState(false)
-	const [genre, setGenre] = useState('all');
+const Movies: React.FC<IMoviesProps> = ({ movies }) => {
+	const [burger, setBurger] = useState<boolean>(false)
+	// const [genre, setGenre] = useState<string>('all');
 
 	let pk = "w-3/5 max-xl:w-4/5 max-lg:w-full max-md:h-screen || max-xl:mt-5 max-md:mt-0 || max-md:fixed max-md:-top-full max-md:bg-black/30 ease-out duration-300"
 	let mb = "w-3/5 max-xl:w-4/5 max-lg:w-full max-md:h-screen || max-xl:mt-5 max-md:mt-0 || z-50 max-md:fixed max-md:top-0 max-md:left-0 max-md:backdrop-blur-sm max-md:bg-black/30 ease-out duration-300"
@@ -46,7 +54,7 @@ const Movies: React.FC<IMoviesProps> = ({ movies, genres }) => {
 			</div>
 			<div className="grid grid-cols-4 max-lg:grid-cols-3 max-md:grid-cols-2 || gap-5 max-md:gap-x-2 max-md:gap-y-4 || pt-12 max-lg:pt-7 max-md:pt-5 max-sm:pt-4">
 				{
-					movies.slice(0, 12).map((item: { id: any; }) =>
+					movies.slice(0, 12).map((item: { id: number; title: string; name: string; vote_average: number; poster_path: string | null; first_air_date: string; release_date: string; }) =>
 						<Movie key={item.id} item={item} />
 					)
 				}

@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 * {
+   scroll-behavior: smooth;
    margin: 0;
    padding: 0;
    box-sizing: border-box;
@@ -30,6 +31,20 @@ body {
 }
 ::-webkit-scrollbar-thumb:hover {
    background: #555;
+}
+
+.swiper {
+   padding-bottom: 20px !important;
+}
+
+.arrowUP {
+   position: fixed;
+   bottom: 20px;
+   right: 20px;
+   background-color: #100f14;
+   border-radius: 6px;
+   padding: 10px;
+   z-index: 100;
 }
 
 // .meTruncate {

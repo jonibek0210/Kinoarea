@@ -1,9 +1,6 @@
 import Link from "next/link";
 
-const MovieInfo: React.FC<any> = (props) => {
-   const { details } = props
-
-   console.log();
+const MovieInfo: React.FC<IMovieInfoProps> = ({ details }) => {
 
    return (
       <>
@@ -24,7 +21,7 @@ const MovieInfo: React.FC<any> = (props) => {
             }
             <li className="flex text-lg font-semibold">
                <p className="flex-auto max-sm:text-sm">Страна:</p>
-               {details?.production_countries ? details?.production_countries?.map((production: any) => <span key={production.iso_3166_1} className="text-[#F2F60F] underline font-light ml-1 max-sm:text-sm">{production?.name}</span>) : ''}
+               {details?.production_countries ? details?.production_countries?.map((production: { name: string }, idx: number) => <span key={idx} className="text-[#F2F60F] underline font-light ml-1 max-sm:text-sm">{production?.name}</span>) : ''}
             </li>
             <li className="flex text-lg font-semibold">
                <p className="flex-auto max-sm:text-sm">исходный язык:</p>
@@ -33,7 +30,7 @@ const MovieInfo: React.FC<any> = (props) => {
             <li className="flex text-lg font-semibold truncate">
                <p className="flex-auto max-sm:text-sm mr-5">разговорные языки:</p>
                {
-                  details?.spoken_languages?.map((language: any, idx: any) => {
+                  details?.spoken_languages?.map((language: { english_name: string }, idx: number) => {
                      return <span key={idx} className="text-[#F2F60F] underline font-light ml-1 max-sm:text-sm">{language.english_name}</span>
                   })
                }
@@ -58,7 +55,7 @@ const MovieInfo: React.FC<any> = (props) => {
             <li className="flex text-lg font-semibold truncate">
                <p className="flex-auto max-sm:text-sm">Жанр:</p>
                {
-                  details?.genres?.map((genre: any) => {
+                  details?.genres?.map((genre: { id: number; name: string; }) => {
                      return <span key={genre.id} className="text-[#F2F60F] underline font-light ml-1 max-sm:text-sm">{genre.name}</span>
                   })
                }
@@ -107,7 +104,7 @@ const MovieInfo: React.FC<any> = (props) => {
             <li className="flex text-lg font-semibold truncate">
                <p className="flex-auto max-sm:text-sm mr-5">компания:</p>
                {
-                  details?.production_companies?.map((company: any) => {
+                  details?.production_companies?.map((company: { id: number; name: string }) => {
                      return <span key={company.id} className="text-[#F2F60F] underline font-light ml-1 max-sm:text-sm">{company.name}</span>
                   })
                }
@@ -117,7 +114,7 @@ const MovieInfo: React.FC<any> = (props) => {
                   <li className="flex text-lg font-semibold">
                      <p className="flex-auto max-sm:text-sm">Создатель:</p>
                      {
-                        details.created_by.map((Creator: any) => {
+                        details.created_by.map((Creator: { id: number; name: string; }) => {
                            return (
                               <Link key={Creator.id} href={`actors/${Creator.id}`}>
                                  <span className="text-[#F2F60F] underline font-light ml-1 max-sm:text-sm">{Creator.name}</span>

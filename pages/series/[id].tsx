@@ -10,10 +10,11 @@ import Trailer from '@/components/Trailer';
 import Companies from '@/components/Сompanies';
 import Layout from '@/layout/Layout';
 
-const key = "1bb078d910403b47ba1478583d67aa0b"
-let url = 'https://api.themoviedb.org/3/tv/'
+import { ISeriePageProps } from '@/types/dynamicpages/serie';
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+	const key = "1bb078d910403b47ba1478583d67aa0b"
+	let url = 'https://api.themoviedb.org/3/tv/'
 	const tv_id = query.id
 
 	const details = await fetch(`${url}${tv_id}?api_key=${key}&language=en-US`)
@@ -43,10 +44,6 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 	const TV_screened_theatrically = await fetch(`${url}${tv_id}/screened_theatrically?api_key=${key}`)
 	const screened_theatrically = await TV_screened_theatrically.json()
 
-	// const season_number = data.seasons.map((season: any) => season.season_number)
-	// const TV_season = await fetch(`https://api.themoviedb.org/3/tv/${tv_id}/season/${season_number}?api_key=${key}&language=en-US`)
-	// const seasons = await TV_season.json()
-
 	// const  = await fetch(``)
 	// const  = await .json()
 
@@ -61,7 +58,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 			external: external,
 			recommendations: recommendations.results,
 			similar: similar.results,
-			videos: videos,
+			videos: videos.results,
 			content_ratings: content_ratings.results,
 			screened_theatrically: screened_theatrically,
 			tv_id: tv_id
@@ -69,20 +66,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 	}
 }
 
-interface ISeriesProps {
-	actors: any
-	details: any
-	watch: any
-	external: any
-	recommendations: any
-	similar: any
-	videos: any
-	content_ratings: any
-	screened_theatrically: any
-	tv_id: any
-}
-
-const Series: React.FC<ISeriesProps> = ({ tv_id, actors, details, watch, external, recommendations, similar, videos, content_ratings, screened_theatrically }) => {
+const Series: React.FC<ISeriePageProps> = ({ tv_id, actors, details, external, recommendations, similar, videos }) => {
 
 	return (
 		<>
