@@ -10,7 +10,6 @@ interface CompaniesInfoProps {
 }
 
 const CompaniesInfo: React.FC<CompaniesInfoProps> = ({ company_id, setModal }) => {
-
    const [data, setData] = useState<any>();
 
    useEffect(() => {

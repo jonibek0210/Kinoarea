@@ -22,7 +22,6 @@ const Header: React.FC = () => {
 		const { data } = await axios.get(
 			`https://api.themoviedb.org/3/search/${type}?api_key=${key}&language=en-US&query=${searchText}&page=1&include_adult=false`
 		)
-
 		setContent(data.results)
 	}
 
