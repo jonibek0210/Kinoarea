@@ -3,7 +3,6 @@ import { useState } from 'react'
 import CompaniesInfo from './CompaniesInfo';
 
 const Companies: React.FC<CompaniesProps> = ({ details }) => {
-
    const [modal, setModal] = useState<any>(false);
    const [id, setId] = useState<number>(0);
 

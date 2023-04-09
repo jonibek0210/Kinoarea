@@ -21,9 +21,9 @@ interface RecMoviesProps {
 }
 
 const RecMovies: React.FC<RecMoviesProps> = ({ movies, description }) => {
-   let btn = Math.ceil(movies?.length / 4)
-   let step = 4
-   const [page, setPage] = useState(1);
+   let btn: number = Math.ceil(movies?.length / 4)
+   let step: number = 4
+   const [page, setPage] = useState<number>(1);
    const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
       setPage(value);
    };
