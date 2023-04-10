@@ -43,7 +43,7 @@ const Actors: React.FC<IActorsPageProps> = ({ persons }) => {
 			<div className="">
 				<div className="flex max-xl:flex-col justify-between items-center max-xl:items-start">
 					<div className="max-md:w-full flex items-center max-md:justify-center max-md:gap-5">
-						<h1 className='text-6xl max-xl:text-4xl max-md:text-2xl || font-black text-white'>Популярные персоны</h1>
+						<h1 className='text-6xl max-xl:text-4xl max-md:text-2xl || font-black text-white'>Popular actors</h1>
 					</div>
 				</div>
 				<div className="grid grid-cols-4 max-lg:grid-cols-3 max-md:grid-cols-2 || gap-5 max-md:gap-x-2 max-md:gap-y-4 || pt-12 max-lg:pt-7 max-md:pt-5 max-sm:pt-4">

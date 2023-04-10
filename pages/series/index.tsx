@@ -6,20 +6,22 @@ import Movie from '@/components/children/Movie';
 import Head from 'next/head';
 import { useHttp } from '@/hook/http.hook';
 import { ISeriesPageProps } from '@/types/pages/seriespage';
+import AllMovies from '@/components/AllMovies';
 
 export const getStaticProps = async () => {
-	const key = "1bb078d910403b47ba1478583d67aa0b"
+	const key: string = "1bb078d910403b47ba1478583d67aa0b"
+	const URL: string = "https://api.themoviedb.org/3/"
 
-	const top_rated = await fetch(`https://api.themoviedb.org/3/tv/top_rated?api_key=${key}&language=en-US&page=1`)
+	const top_rated = await fetch(`${URL}tv/top_rated?api_key=${key}&language=en-US&page=1`)
 	const TV = await top_rated.json()
 
-	const popular = await fetch(`https://api.themoviedb.org/3/tv/popular?api_key=${key}&language=en-US&page=1`)
+	const popular = await fetch(`${URL}tv/popular?api_key=${key}&language=en-US&page=1`)
 	const TVPopular = await popular.json()
 
-	const on_the_air = await fetch(`https://api.themoviedb.org/3/tv/on_the_air?api_key=${key}&language=en-US&page=1`)
+	const on_the_air = await fetch(`${URL}tv/on_the_air?api_key=${key}&language=en-US&page=1`)
 	const TVOn_the_air = await on_the_air.json()
 
-	const airing_today = await fetch(`https://api.themoviedb.org/3/tv/airing_today?api_key=${key}&language=en-US&page=1`)
+	const airing_today = await fetch(`${URL}tv/airing_today?api_key=${key}&language=en-US&page=1`)
 	const TVAiring_today = await airing_today.json()
 
 	return {
@@ -65,100 +67,16 @@ const Series: React.FC<ISeriesPageProps> = ({ TV, TVPopular, TVOn_the_air, TVAir
 					<div className="absolute left-0 bottom-0 w-full h-full bg-gradient-to-t from-[#1e2538] to-transparent"></div>
 				</div>
 				<section>
-					<div className=''>
-						<div className="flex max-xl:flex-col justify-between items-center max-xl:items-start">
-							<div className="max-md:w-full flex items-center max-md:justify-center max-md:gap-5">
-								<h1 className='text-4xl max-xl:text-3xl max-md:text-xl || font-black text-white'>Самые популярные сериалы</h1>
-							</div>
-						</div>
-						<div className="grid grid-cols-4 max-lg:grid-cols-3 max-md:grid-cols-2 || gap-5 max-md:gap-x-2 max-md:gap-y-4 || pt-12 max-lg:pt-7 max-md:pt-5 max-sm:pt-4">
-							{
-								TV.map((item: {
-									id: number;
-									title: string;
-									name: string;
-									vote_average: number;
-									poster_path: string | null;
-									first_air_date: string;
-									release_date: string;
-								}) =>
-									<Movie key={item.id} item={item} />
-								)
-							}
-						</div>
-					</div>
+					<AllMovies movies={TV} description={'Most Popular TV Series'} />
 				</section>
 				<section>
-					<div className='mt-32 max-xl:mt-24 max-lg:mt-16 max-md:mt-10 max-sm:mt-8'>
-						<div className="flex max-xl:flex-col justify-between items-center max-xl:items-start">
-							<div className="max-md:w-full flex items-center max-md:justify-center max-md:gap-5">
-								<h1 className='text-4xl max-xl:text-3xl max-md:text-xl || font-black text-white'>Популярные сериалы</h1>
-							</div>
-						</div>
-						<div className="grid grid-cols-4 max-lg:grid-cols-3 max-md:grid-cols-2 || gap-5 max-md:gap-x-2 max-md:gap-y-4 || pt-12 max-lg:pt-7 max-md:pt-5 max-sm:pt-4">
-							{
-								TVPopular.map((item: {
-									id: number;
-									title: string;
-									name: string;
-									vote_average: number;
-									poster_path: string | null;
-									first_air_date: string;
-									release_date: string;
-								}) =>
-									<Movie key={item.id} item={item} />
-								)
-							}
-						</div>
-					</div>
+					<AllMovies movies={TVPopular} description={'Popular TV shows'} />
 				</section>
 				<section>
-					<div className='mt-32 max-xl:mt-24 max-lg:mt-16 max-md:mt-10 max-sm:mt-8'>
-						<div className="flex max-xl:flex-col justify-between items-center max-xl:items-start">
-							<div className="max-md:w-full flex items-center max-md:justify-center max-md:gap-5">
-								<h1 className='text-4xl max-xl:text-3xl max-md:text-xl || font-black text-white'>в эфире</h1>
-							</div>
-						</div>
-						<div className="grid grid-cols-4 max-lg:grid-cols-3 max-md:grid-cols-2 || gap-5 max-md:gap-x-2 max-md:gap-y-4 || pt-12 max-lg:pt-7 max-md:pt-5 max-sm:pt-4">
-							{
-								TVOn_the_air.map((item: {
-									id: number;
-									title: string;
-									name: string;
-									vote_average: number;
-									poster_path: string | null;
-									first_air_date: string;
-									release_date: string;
-								}) =>
-									<Movie key={item.id} item={item} />
-								)
-							}
-						</div>
-					</div>
+					<AllMovies movies={TVOn_the_air} description={'On the air'} />
 				</section>
 				<section>
-					<div className='mt-32 max-xl:mt-24 max-lg:mt-16 max-md:mt-10 max-sm:mt-8'>
-						<div className="flex max-xl:flex-col justify-between items-center max-xl:items-start">
-							<div className="max-md:w-full flex items-center max-md:justify-center max-md:gap-5">
-								<h1 className='text-4xl max-xl:text-3xl max-md:text-xl || font-black text-white'>Сегодня в эфире</h1>
-							</div>
-						</div>
-						<div className="grid grid-cols-4 max-lg:grid-cols-3 max-md:grid-cols-2 || gap-5 max-md:gap-x-2 max-md:gap-y-4 || pt-12 max-lg:pt-7 max-md:pt-5 max-sm:pt-4">
-							{
-								TVAiring_today.map((item: {
-									id: number;
-									title: string;
-									name: string;
-									vote_average: number;
-									poster_path: string | null;
-									first_air_date: string;
-									release_date: string;
-								}) =>
-									<Movie key={item.id} item={item} />
-								)
-							}
-						</div>
-					</div>
+					<AllMovies movies={TVAiring_today} description={'On air today'} />
 				</section>
 			</Layout>
 		</>

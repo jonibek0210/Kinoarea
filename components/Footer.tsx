@@ -2,6 +2,7 @@ import { FaFacebookF } from "react-icons/fa"
 import { IoLogoVk } from "react-icons/io"
 import { AiOutlineInstagram, AiOutlineTwitter, AiFillYoutube } from "react-icons/ai"
 import Image from "next/image";
+import Link from "next/link";
 
 interface IFooter {
 
@@ -18,15 +19,24 @@ const Footer: React.FC<IFooter> = ({ }) => {
             <button><AiOutlineTwitter className="text-[30px] max-lg:text-[25px] max-md:text-[20px]  || text-[#3C4767] hover:text-white ease-in duration-100 cursor-pointer " /></button>
             <button><AiFillYoutube className="text-[30px] max-lg:text-[25px] max-md:text-[20px]  || text-[#3C4767] hover:text-white ease-in duration-100 cursor-pointer " /></button>
          </div>
-         <div className="w-4/5 || mt-14 max-xl:mt10 max-md:mt-5">
+         <div className="w-2/5 max-md:w-4/5 || mt-14 max-xl:mt10 max-md:mt-5">
             <nav className="">
-               <ul className="flex max-md:flex-col || justify-between items-center max-md:gap-5">
-                  <li className="text-[17px] max-xl:text-sm || text-white font-bold leading-5 hover:text-gray-300 ease-in duration-100 cursor-pointer">Афиша</li>
-                  <li className="text-[17px] max-xl:text-sm || text-white font-bold leading-5 hover:text-gray-300 ease-in duration-100 cursor-pointer">Новости</li>
-                  <li className="text-[17px] max-xl:text-sm || text-white font-bold leading-5 hover:text-gray-300 ease-in duration-100 cursor-pointer">Персоны</li>
-                  <li className="text-[17px] max-xl:text-sm || text-white font-bold leading-5 hover:text-gray-300 ease-in duration-100 cursor-pointer">Рейтинги</li>
-                  <li className="text-[17px] max-xl:text-sm || text-white font-bold leading-5 hover:text-gray-300 ease-in duration-100 cursor-pointer">Рецензии</li>
-                  <li className="text-[17px] max-xl:text-sm || text-white font-bold leading-5 hover:text-gray-300 ease-in duration-100 cursor-pointer">Каталог фильмов</li>
+               <ul className="flex || justify-between items-center max-md:gap-5">
+                  <li className="text-[17px] max-xl:text-sm || text-white font-bold leading-5 hover:text-gray-300 ease-in duration-100 cursor-pointer">
+                     <Link href={`/series`}>
+                        Series
+                     </Link>
+                  </li>
+                  <li className="text-[17px] max-xl:text-sm || text-white font-bold leading-5 hover:text-gray-300 ease-in duration-100 cursor-pointer">
+                     <Link href={`/movies`}>
+                        Movies
+                     </Link>
+                  </li>
+                  <li className="text-[17px] max-xl:text-sm || text-white font-bold leading-5 hover:text-gray-300 ease-in duration-100 cursor-pointer">
+                     <Link href={`/actors`}>
+                        Actors
+                     </Link>
+                  </li>
                </ul>
             </nav>
          </div>

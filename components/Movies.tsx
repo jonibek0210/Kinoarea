@@ -8,6 +8,9 @@ import { IoMdClose } from "react-icons/io";
 import Link from 'next/link';
 
 export interface IMoviesProps {
+	description: string
+	descBtn: string
+	link: string
 	movies: [
 		{
 			id: number;
@@ -21,7 +24,7 @@ export interface IMoviesProps {
 	]
 }
 
-const Movies: React.FC<IMoviesProps> = ({ movies }) => {
+const Movies: React.FC<IMoviesProps> = ({ movies, description, descBtn, link }) => {
 	const [burger, setBurger] = useState<boolean>(false)
 	// const [genre, setGenre] = useState<string>('all');
 
@@ -32,7 +35,7 @@ const Movies: React.FC<IMoviesProps> = ({ movies }) => {
 		<div className="">
 			<div className="flex max-xl:flex-col justify-between items-center max-xl:items-start">
 				<div className="max-md:w-full flex items-center max-md:justify-center max-md:gap-5">
-					<h1 className='text-6xl max-xl:text-5xl max-md:text-3xl || font-black text-white'>Сейчас в кино</h1>
+					<h1 className='text-6xl max-xl:text-5xl max-md:text-3xl || font-black text-white'>{description}</h1>
 					<button onClick={() => setBurger(true)} className='hidden max-md:block'><RxHamburgerMenu size={25} color='#ffffff' /></button>
 				</div>
 				<div className={!burger ? pk : mb}>
@@ -60,8 +63,8 @@ const Movies: React.FC<IMoviesProps> = ({ movies }) => {
 				}
 			</div>
 			<div className="flex justify-center mt-8">
-				<Link href={`/movies`}>
-					<button className='px-12 max-xl:px-8 max-md:px-7 || py-5 max-xl:py-4 max-md:py-3 || border-[2px] rounded-lg || text-lg  || font-bold || text-white border-white'>Все новинки</button>
+				<Link href={`/${link}`}>
+					<button className='px-12 max-xl:px-8 max-md:px-7 || py-5 max-xl:py-4 max-md:py-3 || border-[2px] rounded-lg || text-lg  || font-bold || text-white border-white'>{descBtn}</button>
 				</Link>
 			</div>
 		</div>

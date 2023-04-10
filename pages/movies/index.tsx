@@ -10,6 +10,7 @@ import { IMoviesPageProps } from '@/types/pages/moviespage';
 import { RxHamburgerMenu } from "react-icons/rx"
 import { IoMdClose } from "react-icons/io";
 import Head from 'next/head';
+import AllMovies from '@/components/AllMovies';
 
 export const getStaticProps = async () => {
 	const key = "1bb078d910403b47ba1478583d67aa0b"
@@ -62,116 +63,16 @@ const Movies: React.FC<IMoviesPageProps> = ({ movies, popular, nowPlaying, topRa
 				<div className="absolute left-0 bottom-0 w-full h-full bg-gradient-to-t from-[#1e2538] to-transparent"></div>
 			</div>
 			<section>
-				<div className="">
-					<div className="flex max-xl:flex-col justify-between items-center max-xl:items-start">
-						<div className="max-md:w-full flex items-center max-md:justify-center max-md:gap-5">
-							<h1 className='text-6xl max-xl:text-5xl max-md:text-3xl || font-black text-white'>Сейчас в кино</h1>
-							<button onClick={() => setBurger(true)} className='hidden max-md:block'><RxHamburgerMenu size={25} color='#ffffff' /></button>
-						</div>
-						<div className={!burger ? pk : mb}>
-							<div className="hidden max-md:flex max-md:justify-center max-md:my-5">
-								<Image src="/images/logo.svg" alt="logo" width="130" height="30" />
-								<button onClick={() => setBurger(false)} className="absolute right-5 top-5"><IoMdClose size={30} color="#ffffff" /></button>
-							</div>
-							<ul className='flex max-md:flex-col justify-between max-md:justify-center max-md:items-center max-md:gap-5'>
-								<li className='text-lg max-md:text-sm font-bold text-[#ffffff90] hover:text-white ease-in duration-75 cursor-pointer'>Все</li>
-								<li className='text-lg max-md:text-sm font-bold text-[#ffffff90] hover:text-white ease-in duration-75 cursor-pointer'>Боевики</li>
-								<li className='text-lg max-md:text-sm font-bold text-[#ffffff90] hover:text-white ease-in duration-75 cursor-pointer'>Приключения</li>
-								<li className='text-lg max-md:text-sm font-bold text-[#ffffff90] hover:text-white ease-in duration-75 cursor-pointer'>Комедии</li>
-								<li className='text-lg max-md:text-sm font-bold text-[#ffffff90] hover:text-white ease-in duration-75 cursor-pointer'>Фантастика</li>
-								<li className='text-lg max-md:text-sm font-bold text-[#ffffff90] hover:text-white ease-in duration-75 cursor-pointer'>Триллеры</li>
-								<li className='text-lg max-md:text-sm font-bold text-[#ffffff90] hover:text-white ease-in duration-75 cursor-pointer'>Драма</li>
-							</ul>
-						</div>
-					</div>
-					<div className="grid grid-cols-4 max-lg:grid-cols-3 max-md:grid-cols-2 || gap-5 max-md:gap-x-2 max-md:gap-y-4 || pt-12 max-lg:pt-7 max-md:pt-5 max-sm:pt-4">
-						{
-							movies.map((item: {
-								id: number;
-								title: string;
-								name: string;
-								vote_average: number;
-								poster_path: string | null;
-								first_air_date: string;
-								release_date: string;
-							}) =>
-								<Movie key={item.id} item={item} />
-							)
-						}
-					</div>
-				</div>
+				<AllMovies description={'Now in cinema'} movies={movies} />
 			</section>
 			<section>
-				<div className='mt-32 max-xl:mt-24 max-lg:mt-16 max-md:mt-10 max-sm:mt-8'>
-					<div className="flex max-xl:flex-col justify-between items-center max-xl:items-start">
-						<div className="max-md:w-full flex items-center max-md:justify-center max-md:gap-5">
-							<h1 className='text-4xl max-xl:text-3xl max-md:text-xl || font-black text-white'>Популярные фильмы</h1>
-						</div>
-					</div>
-					<div className="grid grid-cols-4 max-lg:grid-cols-3 max-md:grid-cols-2 || gap-5 max-md:gap-x-2 max-md:gap-y-4 || pt-12 max-lg:pt-7 max-md:pt-5 max-sm:pt-4">
-						{
-							popular.map((item: {
-								id: number;
-								title: string;
-								name: string;
-								vote_average: number;
-								poster_path: string | null;
-								first_air_date: string;
-								release_date: string;
-							}) =>
-								<Movie key={item.id} item={item} />
-							)
-						}
-					</div>
-				</div>
+				<AllMovies description={'Most Popular'} movies={topRated} />
 			</section>
 			<section>
-				<div className='mt-32 max-xl:mt-24 max-lg:mt-16 max-md:mt-10 max-sm:mt-8'>
-					<div className="flex max-xl:flex-col justify-between items-center max-xl:items-start">
-						<div className="max-md:w-full flex items-center max-md:justify-center max-md:gap-5">
-							<h1 className='text-4xl max-xl:text-3xl max-md:text-xl || font-black text-white'>сейчас играет</h1>
-						</div>
-					</div>
-					<div className="grid grid-cols-4 max-lg:grid-cols-3 max-md:grid-cols-2 || gap-5 max-md:gap-x-2 max-md:gap-y-4 || pt-12 max-lg:pt-7 max-md:pt-5 max-sm:pt-4">
-						{
-							nowPlaying.map((item: {
-								id: number;
-								title: string;
-								name: string;
-								vote_average: number;
-								poster_path: string | null;
-								first_air_date: string;
-								release_date: string;
-							}) =>
-								<Movie key={item.id} item={item} />
-							)
-						}
-					</div>
-				</div>
+				<AllMovies description={'Popular films'} movies={popular} />
 			</section>
 			<section>
-				<div className='mt-32 max-xl:mt-24 max-lg:mt-16 max-md:mt-10 max-sm:mt-8'>
-					<div className="flex max-xl:flex-col justify-between items-center max-xl:items-start">
-						<div className="max-md:w-full flex items-center max-md:justify-center max-md:gap-5">
-							<h1 className='text-4xl max-xl:text-3xl max-md:text-xl || font-black text-white'>Самые популярные</h1>
-						</div>
-					</div>
-					<div className="grid grid-cols-4 max-lg:grid-cols-3 max-md:grid-cols-2 || gap-5 max-md:gap-x-2 max-md:gap-y-4 || pt-12 max-lg:pt-7 max-md:pt-5 max-sm:pt-4">
-						{
-							topRated.map((item: {
-								id: number;
-								title: string;
-								name: string;
-								vote_average: number;
-								poster_path: string | null;
-								first_air_date: string;
-								release_date: string;
-							}) =>
-								<Movie key={item.id} item={item} />
-							)
-						}
-					</div>
-				</div>
+				<AllMovies description={'Now playing'} movies={nowPlaying} />
 			</section>
 		</Layout>
 	)

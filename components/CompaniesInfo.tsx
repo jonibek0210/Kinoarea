@@ -10,10 +10,13 @@ interface CompaniesInfoProps {
 }
 
 const CompaniesInfo: React.FC<CompaniesInfoProps> = ({ company_id, setModal }) => {
+   const KEY: string = "1bb078d910403b47ba1478583d67aa0b"
+   const URL: string = "https://api.themoviedb.org/3/"
+
    const [data, setData] = useState<any>();
 
    useEffect(() => {
-      axios.get(`https://api.themoviedb.org/3/company/${company_id}?api_key=1bb078d910403b47ba1478583d67aa0b`)
+      axios.get(`${URL}company/${company_id}?api_key=${KEY}`)
          .then(res => {
             if (res.status === 200 || res.status === 201) {
                setData(res.data);

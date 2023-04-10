@@ -11,7 +11,7 @@ import Link from "next/link";
 import SearchCard from "./children/SearchCard";
 
 const Header: React.FC = () => {
-	const key = "1bb078d910403b47ba1478583d67aa0b"
+	const KEY = "1bb078d910403b47ba1478583d67aa0b"
 	const [burger, setBurger] = useState<boolean>(false)
 	const [search, setSearch] = useState<boolean>(false)
 	const [searchText, setSearchText] = useState<string>('')
@@ -20,7 +20,7 @@ const Header: React.FC = () => {
 
 	const fetchSearch = async () => {
 		const { data } = await axios.get(
-			`https://api.themoviedb.org/3/search/${type}?api_key=${key}&language=en-US&query=${searchText}&page=1&include_adult=false`
+			`https://api.themoviedb.org/3/search/${type}?api_key=${KEY}&language=en-US&query=${searchText}&page=1&include_adult=false`
 		)
 		setContent(data.results)
 	}
@@ -104,21 +104,21 @@ const Header: React.FC = () => {
 						<nav className="">
 							<ul className="flex max-md:flex-col || justify-around max-md:justify-center max-md:items-center || max-md:gap-4">
 								<li className="text-[17px] max-xl:text-sm || text-white font-bold leading-5 hover:text-gray-300 ease-in duration-100 cursor-pointer">
-									<Link href="/series">Сериалы</Link>
+									<Link href="/series">Series</Link>
 								</li>
 								<li className="text-[17px] max-xl:text-sm || text-white font-bold leading-5 hover:text-gray-300 ease-in duration-100 cursor-pointer">
-									<Link href="/movies">Фильмы</Link>
+									<Link href="/movies">Movies</Link>
 								</li>
 								<li className="text-[17px] max-xl:text-sm || text-white font-bold leading-5 hover:text-gray-300 ease-in duration-100 cursor-pointer">
-									<Link href="/actors">Актеры</Link>
+									<Link href="/actors">Actors</Link>
 								</li>
 							</ul>
 						</nav>
 					</div>
 				</div>
-				<div className="flex items-center">
-					<button onClick={() => setSearch(true)} className="bg-white p-[17.6px] rounded-[10px] mr-[12px] max-xl:hidden"><FiSearch color="#3657CB" size={15} /></button>
-					<button className="bg-[#3657CB] || rounded-[10px] max-xl:rounded-[5px] || py-3 px-11 max-xl:px-7 max-xl:py-2 max-md:my-[6px] max-md:px-3 || text-white max-md:text-xs font-bold leading-[166.5%]">Войти</button>
+				<div className="flex items-center gap-3">
+					<button onClick={() => setSearch(true)} className="bg-white p-[17.6px] rounded-[10px] max-xl:hidden"><FiSearch color="#3657CB" size={15} /></button>
+					<button className="rounded-[10px] max-xl:rounded-[5px] || py-3 px-8 max-lg:px-5 max-xl:py-2 max-md:my-[6px] max-md:px-3 || text-white max-md:text-xs font-bold leading-[166.5%] bg-[#3657CB]">LogIn</button>
 				</div>
 			</header>
 		</>
