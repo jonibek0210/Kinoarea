@@ -6,16 +6,15 @@ import { Inter } from '@next/font/google'
 
 import Layout from '@/layout/Layout'
 import Movies from '@/components/Movies'
-import Popular from '@/components/Popular'
 import PopularPersons from '@/components/PopularPersons';
-import Movie from '@/components/children/Movie';
-import Link from 'next/link';
 import { IHomePageProps } from '@/types/pages/homepage';
+import RecMovies from '@/components/RecMovies';
 
 const inter = Inter({ subsets: ['latin'] })
 
 export const getStaticProps = async () => {
-	const key = "1bb078d910403b47ba1478583d67aa0b"
+	const KEY: string = "1bb078d910403b47ba1478583d67aa0b"
+	const URL: string = "https://api.themoviedb.org/3/"
 	// const options = {
 	// 	method: 'GET',
 	// 	headers: {
@@ -23,19 +22,19 @@ export const getStaticProps = async () => {
 	// 	}
 	// };
 
-	const res = await fetch(`https://api.themoviedb.org/3/movie/upcoming?api_key=${key}&language=en-US&page=1`)
+	const res = await fetch(`${URL}movie/upcoming?api_key=${KEY}&language=en-US&page=1`)
 	const movies = await res.json()
 
-	const response = await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${key}&language=en-US&page=1`)
+	const response = await fetch(`${URL}movie/popular?api_key=${KEY}&language=en-US&page=1`)
 	const popular = await response.json()
 
-	const person = await fetch(`https://api.themoviedb.org/3/person/popular?api_key=${key}&language=en-US&page=1`)
+	const person = await fetch(`${URL}person/popular?api_key=${KEY}&language=en-US&page=1`)
 	const persons = await person.json()
 
-	const top_rated = await fetch(`https://api.themoviedb.org/3/tv/top_rated?api_key=${key}&language=en-US&page=1`)
+	const top_rated = await fetch(`${URL}tv/top_rated?api_key=${KEY}&language=en-US&page=1`)
 	const TV = await top_rated.json()
 
-	const genresList = await fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${key}&language=en-US`)
+	const genresList = await fetch(`${URL}genre/movie/list?api_key=${KEY}&language=en-US`)
 	const genres = await genresList.json()
 
 	return {
@@ -82,40 +81,16 @@ const Home: React.FC<IHomePageProps> = ({ movies, popular, persons, TV }) => {
 					<div className="absolute left-0 bottom-0 w-full h-full bg-gradient-to-t from-[#1e2538] to-transparent"></div>
 				</div>
 				<section>
-					<Movies movies={movies} />
+					<Movies movies={movies} description={'Now in cinema'} descBtn={'All new'} link={'movies'} />
 				</section>
-				<section className='mt-8'>
-					<Popular popular={popular} />
+				<section className=''>
+					<RecMovies movies={popular} description={'Popular films'} />
 				</section>
 				<section>
 					<PopularPersons persons={persons} />
 				</section>
 				<section>
-					<div className="mt-32 max-xl:mt-24 max-lg:mt-16 max-md:mt-10 max-sm:mt-8">
-						<div className="">
-							<h1 className='text-5xl max-xl:text-4xl max-md:text-2xl || font-black text-white'>top rated TV</h1>
-						</div>
-						<div className="grid grid-cols-4 max-lg:grid-cols-3 max-md:grid-cols-2 || gap-5 max-md:gap-x-2 max-md:gap-y-4 || pt-12 max-lg:pt-7 max-md:pt-5 max-sm:pt-4">
-							{
-								TV.slice(0, 12).map((item: {
-									id: number;
-									title: string;
-									name: string;
-									vote_average: number;
-									poster_path: string | null;
-									first_air_date: string;
-									release_date: string;
-								}) =>
-									<Movie key={item.id} item={item} />
-								)
-							}
-						</div>
-					</div>
-					<div className="flex justify-center mt-8">
-						<Link href={'/series'}>
-							<button className='px-12 max-xl:px-8 max-md:px-7 || py-5 max-xl:py-4 max-md:py-3 || border-[2px] rounded-lg || text-lg  || font-bold || text-white border-white'>All сериалы</button>
-						</Link>
-					</div>
+					<Movies movies={TV} description={'top rated TV'} descBtn={'All series'} link={'series'} />
 				</section>
 			</div>
 		</Layout>

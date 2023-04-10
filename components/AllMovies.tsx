@@ -1,9 +1,8 @@
-import * as React from 'react';
-import { RxHamburgerMenu } from 'react-icons/rx';
-import Movie from './children/Movie';
+import Movie from "./children/Movie";
 
-export interface IPopularProps {
-   popular: [
+interface AllMoviesProps {
+   description: string
+   movies: [
       {
          id: number;
          title: string;
@@ -16,16 +15,18 @@ export interface IPopularProps {
    ]
 }
 
-const Popular: React.FC<IPopularProps> = ({ popular }) => {
+const AllMovies: React.FC<AllMoviesProps> = ({ movies, description }) => {
 
    return (
-      <div className='mt-40 max-xl:mt-28 max-lg:mt-20 max-md:mt-10 max-sm:mt-8'>
+      <div className='mb-20 max-lg:mb-14 max-md:mb-10 max-sm:mb-8'>
          <div className="flex max-xl:flex-col justify-between items-center max-xl:items-start">
-            <h1 className='text-4xl max-xl:text-3xl max-md:text-xl || font-black text-white'>Popular films</h1>
+            <div className="max-md:w-full flex items-center max-md:justify-center max-md:gap-5">
+               <h1 className='text-4xl max-xl:text-3xl max-md:text-xl || font-black text-white'>{description}</h1>
+            </div>
          </div>
          <div className="grid grid-cols-4 max-lg:grid-cols-3 max-md:grid-cols-2 || gap-5 max-md:gap-x-2 max-md:gap-y-4 || pt-12 max-lg:pt-7 max-md:pt-5 max-sm:pt-4">
             {
-               popular.slice(0, 4).map((item: {
+               movies.map((item: {
                   id: number;
                   title: string;
                   name: string;
@@ -42,4 +43,4 @@ const Popular: React.FC<IPopularProps> = ({ popular }) => {
    );
 }
 
-export default Popular
+export default AllMovies;

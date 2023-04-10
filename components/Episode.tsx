@@ -12,12 +12,15 @@ interface EpisodeProps {
 }
 
 const Episode: React.FC<EpisodeProps> = ({ season_number, tv_id }) => {
+	const KEY: string = "1bb078d910403b47ba1478583d67aa0b"
+	const URL: string = "https://api.themoviedb.org/3/"
+
 	const [episodes, setEpisodes] = useState<any>([]);
 	const [episode_number, setEpisode_number] = useState<number>(1);
 	const [modal, setModal] = useState<any>(false);
 
 	useEffect(() => {
-		axios.get(`https://api.themoviedb.org/3/tv/${tv_id}/season/${season_number}?api_key=1bb078d910403b47ba1478583d67aa0b&language=en-US`)
+		axios.get(`${URL}tv/${tv_id}/season/${season_number}?api_key=${KEY}&language=en-US`)
 			.then(res => {
 				if (res.status === 200 || res.status === 201) {
 					setEpisodes(res.data);

@@ -23,10 +23,10 @@ interface IPopularPersonsProps {
 const PopularPersons: React.FC<IPopularPersonsProps> = ({ persons }) => {
 
 	return (
-		<div className="mt-40 max-xl:mt-28 max-lg:mt-20 max-md:mt-10 max-sm:mt-8">
+		<div className="my-40 max-xl:my-28 max-lg:my-20 max-md:my-10 max-sm:my-8">
 			<div className="flex max-xl:flex-col justify-between items-center max-xl:items-start">
 				<div className="w-full flex items-center justify-between max-md:gap-5">
-					<h1 className='text-4xl max-xl:text-3xl max-md:text-xl || font-black text-white'>Популярные персоны</h1>
+					<h1 className='text-4xl max-xl:text-3xl max-md:text-xl || font-black text-white'>Popular actors</h1>
 					<div className="">
 						<Link href={'/actors'}>
 							<button className="flex items-center gap-3">

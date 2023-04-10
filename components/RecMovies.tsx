@@ -6,6 +6,7 @@ import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 
 interface RecMoviesProps {
+   description: string
    movies: [
       {
          id: number;
@@ -17,7 +18,6 @@ interface RecMoviesProps {
          release_date: string;
       }
    ]
-   description: string
 }
 
 const RecMovies: React.FC<RecMoviesProps> = ({ movies, description }) => {
@@ -48,7 +48,7 @@ const RecMovies: React.FC<RecMoviesProps> = ({ movies, description }) => {
                )
             }
          </div>
-         <Stack spacing={2} display={'flex'} alignItems={'center'} className='mt-20 max-xl:mt-14 max-lg:mt-10 max-sm:mt-6'>
+         <Stack spacing={2} display={'flex'} alignItems={'center'} className='mt-14 max-lg:mt-10 max-sm:mt-6'>
             <Pagination count={btn} variant="outlined" defaultPage={1} onChange={handleChange} shape="rounded" size="large" />
          </Stack>
       </div>

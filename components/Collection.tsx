@@ -29,11 +29,12 @@ interface CollectionProps {
 }
 
 const Collection: React.FC<CollectionProps> = ({ collection }) => {
-   const [data, setData] = useState<{name: string; parts: [{id: number; title: string; poster_path: string | null; vote_average: number; first_air_date: string; release_date: string}], overview: string}>();
-   console.log(data?.parts);
+   const KEY: string = "1bb078d910403b47ba1478583d67aa0b"
+   const URL: string = "https://api.themoviedb.org/3/"
+   const [data, setData] = useState<{ name: string; parts: [{ id: number; title: string; poster_path: string | null; vote_average: number; first_air_date: string; release_date: string }], overview: string }>();
 
    useEffect(() => {
-      axios.get(`https://api.themoviedb.org/3/collection/${collection.id}?api_key=1bb078d910403b47ba1478583d67aa0b&language=en-US`)
+      axios.get(`${URL}collection/${collection.id}?api_key=${KEY}&language=en-US`)
          .then(res => {
             if (res.status === 200 || res.status === 201) {
                setData(res.data);
